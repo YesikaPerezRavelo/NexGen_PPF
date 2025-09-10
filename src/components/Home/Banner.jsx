@@ -14,7 +14,7 @@ export default function Banner() {
             loop
             playsInline
             className="d-block w-100 h-100"
-            style={{ objectFit: "cover" }} // esto recorta el video y llena el contenedor
+            style={{ objectFit: "cover" }} 
           />
           <Carousel.Caption className="text-start mb-5">
             <h1 className="fw-bold display-4">Primer video</h1>
