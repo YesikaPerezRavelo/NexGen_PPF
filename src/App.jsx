@@ -3,6 +3,8 @@ import './App.css'
 import Home from "../src/pages/Home"
 import Footer from './layout/Footer'
 import { Routes, Route } from 'react-router-dom'
+import SideNavbar from './layout/SideNavbar'
+
 
 
 function App() {
@@ -10,6 +12,7 @@ function App() {
 
   return (
     <>
+    <SideNavbar />
     <Routes>
    <Route path="/" element={<Home />} />
    </Routes>
