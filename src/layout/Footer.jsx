@@ -12,28 +12,17 @@ const Footer = () => {
 
   return (
     <footer className="bg-white position-relative">
-      {/* círculo decorativo centrado arriba */}
-      <div
-        className="position-absolute rounded-circle bg-white"
-        style={{
-          width: "8rem",
-          height: "8rem",
-          left: "50%",
-          transform: "translateX(-50%)",
-          top: "-2rem",
-          boxShadow: "0 0 20px rgba(0,0,0,0.06)",
-        }}
-      />
+      
 
 
       <article className="container py-5 py-md-5">
-        <div className="row g-4 g-md-5 align-items-start">
+        <div className="row g-4 g-md-5 align-items-center">
           {/* Columna izquierda: logo + contacto + redes */}
           <section className="col-12 col-md-5 col-lg-3 d-flex flex-column gap-3">
             <img
               className="img-fluid"
-              style={{ width: 48, height: 48 }}
-              src="/images/logoSilhouette.png"
+              style={{ maxWidth: 150 }}
+              src="/images/nexgenPPF.png"
               alt="logo"
             />
             <div>
@@ -67,7 +56,7 @@ const Footer = () => {
 
 
           {/* Columna derecha: grilla de enlaces + newsletter */}
-          <section className="col-12 col-md-7">
+          <section className="col-12 col-md-9">
             <div className="row g-4">
               <div className="col-6 col-md-3">
                 <FooterItem title={empresa.title} links={empresa.links} />
@@ -87,7 +76,7 @@ const Footer = () => {
 
               {/* Newsletter */}
               <div className="col-12 col-md-3">
-                <h5 className="mb-3 text-danger">News Letter</h5>
+                <h5 className="mb-3 text-dark">News Letter</h5>
                 <div className="d-flex flex-column gap-3">
                   <input
                     className="form-control"
