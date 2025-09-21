@@ -3,7 +3,7 @@ import Carousel from "react-bootstrap/Carousel";
 
 export default function Banner() {
   return (
-    <div style={{ position: "", height: "80", overflow: "hidden" }}>
+    <div style={{ position: "", height: "", overflow: "hidden" }}>
       <Carousel fade controls={false} indicators interval={6000} pause="hover" className="h-100">
         {/* Primer video */}
         <Carousel.Item className="h-100">

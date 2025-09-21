@@ -5,8 +5,8 @@ import FooterItem from "../layout/FooterItem";
 
 const Footer = () => {
   const { links, socialMedia } = footerInfo;
-  const empresa = links.find((item) => item.title === "Empresa");
-  const cuenta = links.find((item) => item.title === "Mi Cuenta");
+  const empresa = links.find((item) => item.title === "Company");
+  const cuenta = links.find((item) => item.title === "My Account");
   const legal = links.find((item) => item.title === "Legal");
 
 

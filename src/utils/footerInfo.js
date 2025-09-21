@@ -2,16 +2,16 @@ const footerInfo = {
   links: [
     {
       id: 1,
-      title: "Empresa",
+      title: "Company",
       links: [
         {
           id: 1,
-          title: "Servicios",
+          title: "Services",
           link: "",
         },
         {
           id: 2,
-          title: "Nosotros",
+          title: "Our Story",
           link: "",
         },
         {
@@ -21,23 +21,19 @@ const footerInfo = {
         },
         {
           id: 4,
-          title: "Documentos",
+          title: "Contact",
           link: "",
         },
-        {
-          id: 5,
-          title: "Contacto",
-          link: "",
-        },
+       
       ],
     },
     {
       id: 2,
-      title: "Mi Cuenta",
+      title: "My Account",
       links: [
         {
           id: 1,
-          title: "Seguimiento de pedidos",
+          title: "Following Orders",
           link: "",
         },
         {
