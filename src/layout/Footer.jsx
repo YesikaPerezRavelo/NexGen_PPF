@@ -1,4 +1,4 @@
-import { Link } from "react-router";
+import { Link } from "react-router-dom"; 
 import footerInfo from "../utils/footerInfo";
 import FooterItem from "../layout/FooterItem";
 
@@ -10,14 +10,17 @@ const Footer = () => {
   const legal = links.find((item) => item.title === "Legal");
 
 
+  const handleSubscribe = (e) => {
+    e.preventDefault();
+   
+  };
+
+
   return (
     <footer className="bg-white position-relative">
-      
-
-
       <article className="container py-5 py-md-5">
         <div className="row g-4 g-md-5 align-items-center">
-          {/* Columna izquierda: logo + contacto + redes */}
+       
           <section className="col-12 col-md-5 col-lg-3 d-flex flex-column gap-3">
             <img
               className="img-fluid"
@@ -36,55 +39,67 @@ const Footer = () => {
 
 
             <div className="d-flex gap-3 align-items-center">
-              {socialMedia.map((social) => (
-                <Link
-                  key={social.id}
-                  className="d-inline-flex align-items-center"
-                  title={social.title}
-                  to={social.link}
-                >
-                  <img
-                    src={social.icon}
-                    alt="icon"
-                    className="img-fluid"
-                    style={{ width: 24, height: 24 }}
-                  />
-                </Link>
-              ))}
+              {socialMedia.map((social) => {
+                const Icon = social.icon; 
+                return (
+                  <a
+                    key={social.id}
+                    className="d-inline-flex align-items-center text-dark"
+                    title={social.title}
+                    href={social.link || "#"}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={social.title}
+                  >
+                    <Icon size={24} />
+                  </a>
+                );
+              })}
             </div>
           </section>
 
 
-          {/* Columna derecha: grilla de enlaces + newsletter */}
+          
           <section className="col-12 col-md-9">
             <div className="row g-4">
               <div className="col-6 col-md-3">
-                <FooterItem title={empresa.title} links={empresa.links} />
+                {empresa && (
+                  <FooterItem title={empresa.title} links={empresa.links} />
+                )}
               </div>
 
 
               <div className="col-6 col-md-3">
-                <FooterItem title={cuenta.title} links={cuenta.links} />
+                {cuenta && (
+                  <FooterItem title={cuenta.title} links={cuenta.links} />
+                )}
               </div>
 
 
-              {/* Legal colapsable (si tu FooterItem soporta 'collapsible') */}
+              
               <div className="col-12 col-md-3">
-                <FooterItem title={legal.title} links={legal.links} collapsible />
+                {legal && (
+                  <FooterItem title={legal.title} links={legal.links} collapsible />
+                )}
               </div>
 
 
-              {/* Newsletter */}
+            
               <div className="col-12 col-md-3">
                 <h5 className="mb-3 text-dark">News Letter</h5>
-                <div className="d-flex flex-column gap-3">
+                <form className="d-flex flex-column gap-3" onSubmit={handleSubscribe}>
+                  <label htmlFor="newsletterEmail" className="visually-hidden">
+                    Email address
+                  </label>
                   <input
+                    id="newsletterEmail"
                     className="form-control"
                     type="email"
-                    placeholder="Correo electrónico"
+                    placeholder="Email address"
+                    required
                   />
-                  <button className="btn btn-danger w-100">
-                    Suscribirme
+                  <button className="btn btn-danger w-100" type="submit">
+                    Subscribe
                   </button>
 
 
@@ -93,14 +108,15 @@ const Footer = () => {
                       className="form-check-input"
                       type="checkbox"
                       id="privacyCheck"
+                      required
                     />
                     <label className="form-check-label" htmlFor="privacyCheck">
                       <Link className="link-secondary text-decoration-none" to="#">
-                        He leído y acepto la política de privacidad
+                        Read and accept the privacy policy
                       </Link>
                     </label>
                   </div>
-                </div>
+                </form>
               </div>
             </div>
           </section>
