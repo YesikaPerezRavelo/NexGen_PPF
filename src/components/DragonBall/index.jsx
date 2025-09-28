@@ -1,5 +1,6 @@
+// src/components/DragonBall.jsx
 import { useEffect, useState } from "react";
-import { Card, Button, Form, Spinner, Alert } from "react-bootstrap";
+import { Card, Button, Spinner, Alert } from "react-bootstrap";
 
 
 export default function DragonBallShop() {
@@ -15,16 +16,11 @@ export default function DragonBallShop() {
       try {
         const res = await fetch("https://dragonball-api.com/api/characters");
         const json = await res.json();
-
-
-        // La API a veces viene como { items: [...] } y otras como array.
         const list = Array.isArray(json) ? json : (json?.items ?? []);
-        // Normalizamos campos por si cambian nombres
         const normalized = list.map((c, i) => ({
           id: c.id ?? i,
           name: c.name ?? c.character ?? "Desconocido",
           image: c.image ?? c.img ?? "",
-          // muchas variantes posibles de ki
           ki: c.ki ?? c.maxKi ?? c.power ?? c.powerLevel ?? "N/A",
           race: c.race ?? c.species ?? "",
           affiliation: c.affiliation ?? c.originPlanet ?? "",
@@ -45,30 +41,14 @@ export default function DragonBallShop() {
   );
 
 
+  const handleAddLocal = (item) => {
+    // 🔊 Emitimos un evento global que escuchará el SideNavbar
+    window.dispatchEvent(new CustomEvent("cart:add", { detail: item }));
+  };
+
+
   return (
     <div className="container py-4">
-      {/* <h1 className="mb-3">Personajes — Dragon Ball</h1> */}
-
-
-      {/* <div className="d-flex gap-3 align-items-center mb-3">
-        <Form.Control
-          placeholder="Buscar personaje..."
-          value={q}
-          onChange={(e) => setQ(e.target.value)}
-          style={{ maxWidth: 320 }}
-        />
-        <Form.Select
-          value={limit}
-          onChange={(e) => setLimit(Number(e.target.value))}
-          style={{ maxWidth: 140 }}
-        >
-          {[6, 12, 18, 24].map((n) => (
-            <option key={n} value={n}>{n} resultados</option>
-          ))}
-        </Form.Select>
-      </div> */}
-
-
       {loading && (
         <div className="d-flex justify-content-center py-5">
           <Spinner animation="border" />
@@ -96,11 +76,22 @@ export default function DragonBallShop() {
                     {c.race ? <> • {c.race}</> : null}
                   </Card.Text>
                   {c.affiliation && (
-                    <small className="text-secondary">
-                      {c.affiliation}
-                    </small>
+                    <small className="text-secondary">{c.affiliation}</small>
                   )}
-                  <Button variant="dark" className="mt-auto">
+
+
+                  <Button
+                    variant="dark"
+                    className="mt-auto"
+                    onClick={() =>
+                      handleAddLocal({
+                        id: c.id,
+                        name: c.name,
+                        image: c.image,
+                        price: 99,
+                      })
+                    }
+                  >
                     Add to cart
                   </Button>
                 </Card.Body>

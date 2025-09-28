@@ -2,11 +2,11 @@
 const bannersData = [
   {
     id: 1,
-    type: "video", // también podría ser "image"
+    type: "video",
     src: "/videos/PPF.mp4",
     title: "Protección PPF",
     text: "Film premium para autos, máxima durabilidad.",
-    cta: { label: "Shop now", to: "/productos/ppf" },
+    cta: { label: "Shop now", to: "/shop" },
   },
   {
     id: 2,
@@ -14,7 +14,7 @@ const bannersData = [
     src: "/videos/WindowFilm.mp4",
     title: "Window Film",
     text: "Confort térmico y control solar en tu hogar.",
-    cta: { label: "Shop now", to: "/productos/window-film" },
+    cta: { label: "Shop now", to: "/shop" },
   },
   {
     id: 3,
@@ -22,7 +22,7 @@ const bannersData = [
     src: "/videos/Boats.mp4",
     title: "Marine Film",
     text: "Protección avanzada para embarcaciones.",
-    cta: { label: "Shop now", to: "/productos/marine" },
+    cta: { label: "Shop now", to: "/shop" },
   },
 ];
 

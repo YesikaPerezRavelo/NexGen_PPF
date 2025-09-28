@@ -42,7 +42,7 @@ export default function Banner() {
 
 
               {banner.cta && (
-                <ButtonAll link={banner.cta.to}>
+                <ButtonAll to={banner.cta.to}>
                   {banner.cta.label}
                 </ButtonAll>
               )}

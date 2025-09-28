@@ -1,8 +1,18 @@
-// src/layout/SideNavbar.jsx
+import { useEffect, useState } from "react";
 import NavBarCustom from "../../layout/NavBarCustom";
 
 
 function SideNavbar() {
+  const [cartCount, setCartCount] = useState(0);
+
+
+  useEffect(() => {
+    const onAdd = () => setCartCount((c) => c + 1);
+    window.addEventListener("cart:add", onAdd);
+    return () => window.removeEventListener("cart:add", onAdd);
+  }, []);
+
+
   const links = [
     { label: "About", href: "/about" },
     { label: "Contact", href: "/contact" },
@@ -28,7 +38,7 @@ function SideNavbar() {
       brand="NexGen"
       links={links}
       onSearchSubmit={handleSearch}
-      cartCount={2}
+      cartCount={cartCount}   
       favCount={0}
       iconColor="white"
       iconSize={26}
