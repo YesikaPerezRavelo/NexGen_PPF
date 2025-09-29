@@ -29,7 +29,7 @@ const Footer = () => {
               alt="logo"
             />
             <div>
-              <p className="mb-1">¿Tienes alguna pregunta?</p>
+              <p className="mb-1">Do you have any questions?</p>
               <strong className="text-secondary">PBX: (601) 370.22.00</strong>
             </div>
             <p className="mb-2">

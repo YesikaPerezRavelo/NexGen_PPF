@@ -1,4 +1,3 @@
-// src/sections/Cart/AddedProducts.jsx
 import CartItemsTable from "../../components/Cart/CartItemsTable";
 import { InputGroup, Form, Button } from "react-bootstrap";
 

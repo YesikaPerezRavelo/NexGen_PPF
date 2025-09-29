@@ -6,15 +6,18 @@ import { Routes, Route } from 'react-router-dom'
 import SideNavbar from './layout/SideNavbar'
 import Shop from './pages/Shop'
 // import Cart from './pages/Cart'  // si después lo querés usar
+import Login from './pages/Login'
+import AdminPanel from './pages/AdminPanel'
+import UserPanel from './pages/UserPanel'
 
 
 function App() {
-  // ✅ Estado del carrito
+
   const [cartCount, setCartCount] = useState(0)
   const [cartItems, setCartItems] = useState([])
 
 
-  // ✅ Función para agregar al carrito
+
   const handleAddToCart = (product) => {
     setCartCount((c) => c + 1)
     setCartItems((prev) => [...prev, product])
@@ -28,6 +31,10 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/shop" element={<Shop onAddToCart={handleAddToCart} />} />
         {/* <Route path="/cart" element={<Cart cartItems={cartItems} />} /> */}
+        <Route path="/login" element={<Login />} />
+  <Route path="/admin" element={<AdminPanel />} />
+  <Route path="/user" element={<UserPanel />} /> 
+
       </Routes>
       <Footer />
     </>

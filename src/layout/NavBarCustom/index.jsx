@@ -67,7 +67,10 @@ export default function NavBarCustom({
             <Button variant="outline-light" type="submit">Search</Button>
 
 
-            <CiUser size={iconSize} color={iconColor} style={{ cursor: "pointer" }} />
+            {/* <CiUser size={iconSize} color={iconColor} style={{ cursor: "pointer" }} /> */}
+<NavLink to="/login" className="d-flex align-items-center">
+  <CiUser size={iconSize} color={iconColor} style={{ cursor: "pointer" }} />
+</NavLink>
 
 
             <div className="position-relative">
