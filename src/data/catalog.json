@@ -1,0 +1,81 @@
+{
+  "architectural": {
+    "clear-security": [
+      { "id": 1, "title": "Clear Security Film – Security Film Clear", "image": "/images/architectural/clear-security/security film clear.jpg", "price": 2300 },
+      { "id": 2, "title": "Clear Security Film – Security Film", "image": "/images/architectural/clear-security/security film.jpg", "price": 2650 },
+      { "id": 3, "title": "Clear Security Film – Security Window Film", "image": "/images/architectural/clear-security/security-window-film.jpeg", "price": 3100 },
+      { "id": 4, "title": "Clear Security Film – Window", "image": "/images/architectural/clear-security/window.jpg", "price": 3350 },
+      { "id": 5, "title": "Clear Security Film – Window 2", "image": "/images/architectural/clear-security/window2.jpg", "price": 3550 }
+    ],
+    "exterior-window": [
+      { "id": 6, "title": "Exterior Architectural Window Film – Exterior Window", "image": "/images/architectural/exterior-window/exterior window.jpg", "price": 3600 },
+      { "id": 7, "title": "Exterior Architectural Window Film – Exterior Window 2", "image": "/images/architectural/exterior-window/exterior window2.jpg", "price": 3900 },
+      { "id": 8, "title": "Exterior Architectural Window Film – Window 1 Exterior", "image": "/images/architectural/exterior-window/window1exterior.jpg", "price": 4100 },
+      { "id": 9, "title": "Exterior Architectural Window Film – Window 3 Exterior", "image": "/images/architectural/exterior-window/window3exterior.jpg", "price": 4300 },
+      { "id": 10, "title": "Exterior Architectural Window Film – Window Exterior", "image": "/images/architectural/exterior-window/windowexterior.jpg", "price": 4500 }
+    ]
+  },
+  "automotive-protection": {
+    "ppf-color": [
+      { "id": 11, "title": "Color PPF – Sport Black Yellow Car", "image": "/images/automotive-protection/ppf-color/autotuning-de-estilo-deportivo-negro-amarillo-de-un-coche.jpg", "price": 7050 },
+      { "id": 12, "title": "Color PPF – 3D Vibrant Colors (1)", "image": "/images/automotive-protection/ppf-color/coche-3d-con-colores-vibrantes (1).jpg", "price": 7400 },
+      { "id": 13, "title": "Color PPF – 3D Simple Background", "image": "/images/automotive-protection/ppf-color/coche-3d-con-fondo-simple.jpg", "price": 6650 },
+      { "id": 14, "title": "Color PPF – Color 1", "image": "/images/automotive-protection/ppf-color/color1.jpg", "price": 6900 },
+      { "id": 15, "title": "Color PPF – Color 2", "image": "/images/automotive-protection/ppf-color/Color2.jpg", "price": 7100 },
+      { "id": 16, "title": "Color PPF – Color 4", "image": "/images/automotive-protection/ppf-color/Color4.jpg", "price": 7300 },
+      { "id": 17, "title": "Color PPF – Sample", "image": "/images/automotive-protection/ppf-color/colorPPF.jpg", "price": 6500 },
+      { "id": 18, "title": "Color PPF – Sample 2", "image": "/images/automotive-protection/ppf-color/colorPPF2.jpg", "price": 6750 },
+      { "id": 19, "title": "Color PPF – Sample 3 (GIF)", "image": "/images/automotive-protection/ppf-color/colorPPF3.gif", "price": 6850 },
+      { "id": 20, "title": "Color PPF – Sample 4", "image": "/images/automotive-protection/ppf-color/colorPPF4.jpg", "price": 7000 },
+      { "id": 21, "title": "Color PPF – Sample 5", "image": "/images/automotive-protection/ppf-color/colorPPF5.jpg", "price": 7200 },
+      { "id": 22, "title": "Color PPF – Sample 6", "image": "/images/automotive-protection/ppf-color/colorPPF6.jpg", "price": 7400 },
+      { "id": 23, "title": "Color PPF – Wrapping Work (1)", "image": "/images/automotive-protection/ppf-color/persona-que-trabaja-en-la-rotulacion-de-automoviles (1).jpg", "price": 6800 },
+      { "id": 24, "title": "Color PPF – Wrapping Work (2)", "image": "/images/automotive-protection/ppf-color/persona-que-trabaja-en-la-rotulacion-de-automoviles (2).jpg", "price": 6950 },
+      { "id": 25, "title": "Color PPF – Wrapping Work (3)", "image": "/images/automotive-protection/ppf-color/persona-que-trabaja-en-la-rotulacion-de-automoviles (3).jpg", "price": 7050 },
+      { "id": 26, "title": "Color PPF – Red Vehicle On Street", "image": "/images/automotive-protection/ppf-color/vehiculo-rojo-en-la-calle.jpg", "price": 7150 }
+    ],
+    "ppf-premium": [
+      { "id": 27, "title": "PPF Premium – Automotive PPF 1", "image": "/images/automotive-protection/ppf-premium/123.jpg", "price": 8200 },
+      { "id": 28, "title": "PPF Premium – Automotive PPF 2", "image": "/images/automotive-protection/ppf-premium/AutomotivePPF2.jpg", "price": 8350 },
+      { "id": 29, "title": "PPF Premium – Automotive PPF 3", "image": "/images/automotive-protection/ppf-premium/AutomotivePPF3.jpg", "price": 8500 },
+      { "id": 30, "title": "PPF Premium – Automotive PPF 4", "image": "/images/automotive-protection/ppf-premium/AutomotivePPF4.jpg", "price": 8650 },
+      { "id": 31, "title": "PPF Premium – Automotive PPF 5", "image": "/images/automotive-protection/ppf-premium/AutomotivePPF5.jpg", "price": 8800 },
+      { "id": 32, "title": "PPF Premium – Aluminum Wrap Service", "image": "/images/automotive-protection/ppf-premium/envoltura-de-automoviles-con-papel-de-aluminio-en-el-servicio-de-automoviles.jpg", "price": 8950 },
+      { "id": 33, "title": "PPF Premium – PPF 1", "image": "/images/automotive-protection/ppf-premium/ppf1.jpg", "price": 8400 },
+      { "id": 34, "title": "PPF Premium – PPF 2", "image": "/images/automotive-protection/ppf-premium/Ppf2.jpg", "price": 8550 },
+      { "id": 35, "title": "PPF Premium – PPF 3", "image": "/images/automotive-protection/ppf-premium/Ppf3.jpg", "price": 8700 }
+    ],
+    "ppf-ultra": [
+      { "id": 36, "title": "PPF Ultra – Paint 3", "image": "/images/automotive-protection/ppf-ultra/paint3.jpg", "price": 9200 },
+      { "id": 37, "title": "PPF Ultra – Paint 4", "image": "/images/automotive-protection/ppf-ultra/paint4.jpg", "price": 9400 },
+      { "id": 38, "title": "PPF Ultra – Paint 5", "image": "/images/automotive-protection/ppf-ultra/paint5.jpg", "price": 9550 },
+      { "id": 39, "title": "PPF Ultra – Paint 7", "image": "/images/automotive-protection/ppf-ultra/paint7.jpg", "price": 9700 },
+      { "id": 40, "title": "PPF Ultra – Paint 123", "image": "/images/automotive-protection/ppf-ultra/Paint123.jpg", "price": 9850 },
+      { "id": 41, "title": "PPF Ultra – Paint Protection 2", "image": "/images/automotive-protection/ppf-ultra/PaintProtection2.png", "price": 10000 },
+      { "id": 42, "title": "PPF Ultra – Wrapping Work", "image": "/images/automotive-protection/ppf-ultra/persona-que-trabaja-en-la-rotulacion-de-automoviles.jpg", "price": 9300 },
+      { "id": 43, "title": "PPF Ultra – PPF 2", "image": "/images/automotive-protection/ppf-ultra/ppf2.jpg", "price": 9450 }
+    ]
+  },
+  "automotive-window": {
+    "chameleon": [
+      { "id": 44, "title": "Chameleon Film – Chameleon", "image": "/images/automotive-window/chameleon/Chameleon.jpg", "price": 2500 },
+      { "id": 45, "title": "Chameleon Film – Chameleon Film", "image": "/images/automotive-window/chameleon/ChameleonFilm.jpeg", "price": 2650 },
+      { "id": 46, "title": "Chameleon Film – Chameleon Film 2", "image": "/images/automotive-window/chameleon/ChameleonFilm2.png", "price": 2800 },
+      { "id": 47, "title": "Chameleon Film – Chameleon Film 3", "image": "/images/automotive-window/chameleon/ChameleonFilm3.jpg", "price": 2950 }
+    ],
+    "chip-dyed": [
+      { "id": 48, "title": "Chip Dyed Fiona Nano – Chip", "image": "/images/automotive-window/chip-dyed/Chip.jpg", "price": 2100 },
+      { "id": 49, "title": "Chip Dyed Fiona Nano – Chip Dyed", "image": "/images/automotive-window/chip-dyed/ChipDyed.jpg", "price": 2250 },
+      { "id": 50, "title": "Chip Dyed Fiona Nano – Chip Dyed Film", "image": "/images/automotive-window/chip-dyed/ChipDyedFilm.jpg", "price": 2350 },
+      { "id": 51, "title": "Chip Dyed Fiona Nano – Chip Dyed Film 2", "image": "/images/automotive-window/chip-dyed/ChipDyedFilm2.jpg", "price": 2450 }
+    ],
+    "nano-carbon": [
+      { "id": 52, "title": "Nano Carbon Film – Nano", "image": "/images/automotive-window/nano-carbon/nano.jpg", "price": 2650 },
+      { "id": 53, "title": "Nano Carbon Film – Nano Carbon", "image": "/images/automotive-window/nano-carbon/nanoCarbon.jpg", "price": 2800 },
+      { "id": 54, "title": "Nano Carbon Film – Nano Carbon 2", "image": "/images/automotive-window/nano-carbon/nanoCarbon2.jpg", "price": 2950 }
+    ],
+    "nano-ceramic": [
+      { "id": 55, "title": "Nano Ceramic Film – 35%", "image": "/images/automotive-window/nano-ceramic/coche-3d-en-una-calle-de-la-ciudad.jpg", "price": 3200 }
+    ]
+  }
+}

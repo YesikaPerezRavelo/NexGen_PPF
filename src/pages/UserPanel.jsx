@@ -25,7 +25,7 @@ export default function UserPanel() {
   }, [navigate, token, user?.role]);
 
 
-  // Mock data (replace with your API later)
+ 
   const stats = [
     { label: "Orders", value: 3 },
     { label: "Returns", value: 1 },

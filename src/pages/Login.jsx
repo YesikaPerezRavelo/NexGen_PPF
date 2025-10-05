@@ -1,8 +1,14 @@
-// ...imports
+import { useEffect, useRef, useState } from "react";
 import { Container, Row, Col, Card, Form, Button, Alert } from "react-bootstrap";
-import PasswordToggleInput from "../sections/login/PasswordToggleInput";
-import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import PasswordToggleInput from "../sections/login/PasswordToggleInput";
+
+
+// ⚙️ Variables de entorno (Vite)
+const ADMIN_EMAIL = import.meta.env.VITE_ADMIN_EMAIL;
+const ADMIN_PASS  = import.meta.env.VITE_ADMIN_PASS;
+const USER_EMAIL  = import.meta.env.VITE_USER_EMAIL;
+const USER_PASS   = import.meta.env.VITE_USER_PASS;
 
 
 export default function Login() {
@@ -10,24 +16,61 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [errMsg, setErrMsg] = useState("");
   const navigate = useNavigate();
+  const logoutTimer = useRef(null);
 
+
+  const safeParse = (key) => {
+    try {
+      return JSON.parse(localStorage.getItem(key) || "null");
+    } catch {
+      return null;
+    }
+  };
+
+
+  const doLogout = (notify = true) => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    localStorage.removeItem("expiresAt");
+    if (logoutTimer.current) clearTimeout(logoutTimer.current);
+    if (notify) alert("La sesión expiró. Iniciá sesión nuevamente.");
+    navigate("/login");
+  };
 
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    const user = JSON.parse(localStorage.getItem("user") || "{}");
+    const user = safeParse("user") || {};
     const expiresAt = Number(localStorage.getItem("expiresAt") || 0);
 
 
     if (token && Date.now() < expiresAt) {
       if (user.role === "admin") navigate("/admin");
       else if (user.role === "user") navigate("/user");
+
+
+      const msLeft = expiresAt - Date.now();
+      logoutTimer.current = setTimeout(() => doLogout(), msLeft);
     } else {
-    
-      localStorage.removeItem("token");
-      localStorage.removeItem("user");
-      localStorage.removeItem("expiresAt");
+      doLogout(false);
     }
+
+
+    const onStorage = (e) => {
+      if (e.key === "expiresAt" || e.key === "token") {
+        const ok =
+          localStorage.getItem("token") &&
+          Date.now() < Number(localStorage.getItem("expiresAt") || 0);
+        if (!ok) doLogout(false);
+      }
+    };
+
+
+    window.addEventListener("storage", onStorage);
+    return () => {
+      window.removeEventListener("storage", onStorage);
+      if (logoutTimer.current) clearTimeout(logoutTimer.current);
+    };
   }, [navigate]);
 
 
@@ -36,28 +79,30 @@ export default function Login() {
     setErrMsg("");
 
 
+    const matchAdmin = email === ADMIN_EMAIL && password === ADMIN_PASS;
+    const matchUser = email === USER_EMAIL && password === USER_PASS;
 
-    const TEN_SECONDS = 10 * 1000;
-    const expiresAt = Date.now() + TEN_SECONDS;
 
-
-    if (email === "admin@nexgenppf.com" && password === "panel12345") {
-      localStorage.setItem("token", "mock-admin-token");
-      localStorage.setItem("user", JSON.stringify({ email, role: "admin" }));
-      localStorage.setItem("expiresAt", String(expiresAt));
-      return navigate("/admin");
+    if (!matchAdmin && !matchUser) {
+      setErrMsg("Correo o contraseña incorrectos");
+      return;
     }
 
 
-    if (email === "user@nexgenppf.com" && password === "12345") {
-      localStorage.setItem("token", "mock-user-token");
-      localStorage.setItem("user", JSON.stringify({ email, role: "user" }));
-      localStorage.setItem("expiresAt", String(expiresAt));
-      return navigate("/user");
-    }
+    const role = matchAdmin ? "admin" : "user";
+    const expiresAt = Date.now() + 10 * 1000; // 🔥 Sesión de 10 segundos
 
 
-    setErrMsg("Correo o contraseña incorrectos");
+    localStorage.setItem("token", `mock-${role}-token`);
+    localStorage.setItem("user", JSON.stringify({ email, role }));
+    localStorage.setItem("expiresAt", String(expiresAt));
+
+
+    if (logoutTimer.current) clearTimeout(logoutTimer.current);
+    logoutTimer.current = setTimeout(() => doLogout(), 10 * 1000);
+
+
+    navigate(role === "admin" ? "/admin" : "/user");
   };
 
 
@@ -74,7 +119,9 @@ export default function Login() {
 
               <p className="text-center mb-4">
                 Don't have an account?{" "}
-                <Link className="text-danger fw-semibold" to="/registro">Register</Link>
+                <Link className="text-danger fw-semibold" to="/registro">
+                  Register
+                </Link>
               </p>
 
 
@@ -102,12 +149,16 @@ export default function Login() {
 
 
                 <div className="mb-3">
-                  <Link to="/forgot-password" className="text-muted small">Reset your password</Link>
+                  <Link to="/forgot-password" className="text-muted small">
+                    Reset your password
+                  </Link>
                 </div>
 
 
                 <div className="d-grid">
-                  <Button type="submit" variant="outline-danger">Login</Button>
+                  <Button type="submit" variant="outline-danger">
+                    Login
+                  </Button>
                 </div>
               </Form>
 
