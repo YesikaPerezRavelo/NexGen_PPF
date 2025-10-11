@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Container, Row, Col, Card, Form, Button, Alert } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import PasswordToggleInput from "../sections/login/PasswordToggleInput";
+// import Banner from "../components/Home/Banner";
 
 
 // ⚙️ Variables de entorno (Vite)
@@ -107,6 +108,7 @@ export default function Login() {
 
 
   return (
+    
     <Container className="py-5" style={{ marginTop: "5rem" }}>
       <Row className="justify-content-center">
         <Col xs={12} md={8} lg={5}>
@@ -119,9 +121,13 @@ export default function Login() {
 
               <p className="text-center mb-4">
                 Don't have an account?{" "}
-                <Link className="text-danger fw-semibold" to="/registro">
+                
+                <Link className="text-danger fw-semibold" to="/under-construction">
                   Register
                 </Link>
+                <p>admin@nexgenppf.com = panel12345
+                user@nexgenppf.com = 12345</p>
+                
               </p>
 
 

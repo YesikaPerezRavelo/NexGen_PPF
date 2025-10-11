@@ -9,6 +9,8 @@ import Shop from './pages/Shop'
 import Login from './pages/Login'
 import AdminPanel from './pages/AdminPanel'
 import UserPanel from './pages/UserPanel'
+import UnderConstruction from './pages/UnderConstruction'
+import ProtectedRoute from './routes/ProtectedRoute'
 
 
 function App() {
@@ -32,8 +34,9 @@ function App() {
         <Route path="/shop" element={<Shop onAddToCart={handleAddToCart} />} />
         {/* <Route path="/cart" element={<Cart cartItems={cartItems} />} /> */}
         <Route path="/login" element={<Login />} />
-  <Route path="/admin" element={<AdminPanel />} />
-  <Route path="/user" element={<UserPanel />} /> 
+  <Route path="/admin" element={<ProtectedRoute><AdminPanel /></ProtectedRoute>} />
+  <Route path="/user" element={<ProtectedRoute><UserPanel /></ProtectedRoute>} /> 
+  <Route path="/under-construction" element={<UnderConstruction />} /> 
 
       </Routes>
       <Footer />

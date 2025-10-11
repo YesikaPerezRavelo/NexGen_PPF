@@ -42,15 +42,15 @@ export default function UserPanel() {
 
 
   const wishlist = [
-    { id: "w1", name: "PPF Gloss 60\"", price: 249.99, img: "/images/sample1.jpg" },
-    { id: "w2", name: "PPF Matte 24\"", price: 119.00, img: "/images/sample2.jpg" },
-    { id: "w3", name: "Blackout Vinyl", price: 39.90, img: "/images/sample3.jpg" },
+    { id: "w1", name: "PPF Gloss 60\"", price: 249.99, img: "/images/underconstruction.jpg" },
+    { id: "w2", name: "PPF Matte 24\"", price: 119.00, img: "/images/underconstruction.jpg" },
+    { id: "w3", name: "Blackout Vinyl", price: 39.90, img: "/images/underconstruction.jpg" },
   ];
 
 
   const addresses = [
-    { id: "a1", label: "Home", name: "Jessica Perez", line1: "1234 Cabildo Ave", city: "Buenos Aires", zip: "1426", phone: "11-5555-5555", default: true },
-    { id: "a2", label: "Work", name: "Jessica Perez", line1: "Martínez 500", city: "San Isidro", zip: "1642", phone: "11-4444-4444" },
+    { id: "a1", label: "Home", name: "Yesika Perez", line1: "1234 Cabildo Ave", city: "Buenos Aires", zip: "1426", phone: "11-5555-5555", default: true },
+    { id: "a2", label: "Work", name: "Yesika Perez", line1: "Martínez 500", city: "San Isidro", zip: "1642", phone: "11-4444-4444" },
   ];
 
 

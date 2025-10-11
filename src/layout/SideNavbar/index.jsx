@@ -20,8 +20,9 @@ function SideNavbar() {
       title: "Products",
       dropdown: true,
       items: [
-        { label: "Paint Protection Film", href: "/ppf" },
-        { label: "Window Film", href: "/window-film" },
+        { label: "Automotive", href: "/ppf" },
+        { label: "Window", href: "/window-film" },
+        { label: "Architectural", href: "/window-film" },
       ],
     },
   ];

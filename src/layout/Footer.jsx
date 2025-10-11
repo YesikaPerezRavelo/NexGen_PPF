@@ -3,6 +3,7 @@ import footerInfo from "../utils/footerInfo";
 import FooterItem from "../layout/FooterItem";
 
 
+
 const Footer = () => {
   const { links, socialMedia } = footerInfo;
   const empresa = links.find((item) => item.title === "Company");
@@ -30,7 +31,7 @@ const Footer = () => {
             />
             <div>
               <p className="mb-1">Do you have any questions?</p>
-              <strong className="text-secondary">PBX: (601) 370.22.00</strong>
+              <p className="text-secondary">PBX: (601) 370.22.00</p>
             </div>
             <p className="mb-2">
               Lorem ipsum dolor sit amet consectetur. Etiam id enim diam
@@ -87,7 +88,7 @@ const Footer = () => {
             
               <div className="col-12 col-md-3">
                 <h5 className="mb-3 text-dark">News Letter</h5>
-                <form className="d-flex flex-column gap-3" onSubmit={handleSubscribe}>
+                {/* <form className="d-flex flex-column gap-3" onSubmit={handleSubscribe}>
                   <label htmlFor="newsletterEmail" className="visually-hidden">
                     Email address
                   </label>
@@ -116,7 +117,21 @@ const Footer = () => {
                       </Link>
                     </label>
                   </div>
-                </form>
+                </form> */}
+
+                 <div class="footer-column newsletter">
+         
+          <form action="https://formspree.io/f/xpwdazal"  className="d-flex flex-column gap-3"  method="POST">
+            <label>
+              <input type="email" name="email" className="form-control" placeholder="Email address" required />
+            </label>
+            <label>
+              <textarea name="message" className="form-control" placeholder="Write your message here" rows="4"></textarea>
+            </label>
+           
+            <button class="btn btn-danger w-100" type="submit">Enviar</button>
+          </form>
+        </div>
               </div>
             </div>
           </section>
