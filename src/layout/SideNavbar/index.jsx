@@ -51,7 +51,7 @@ function SideNavbar() {
 
   const links = [
     { label: "About", href: "/under-construction" },
-    { label: "Contact", href: "/under-construction" },
+    { label: "Contact", href: "/contact" },
     {
       title: "Products",
       dropdown: true,

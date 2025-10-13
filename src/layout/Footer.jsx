@@ -87,7 +87,7 @@ const Footer = () => {
 
             
               <div className="col-12 col-md-3">
-                <h5 className="mb-3 text-dark">News Letter</h5>
+                <h5 className="mb-3 text-dark">Contact</h5>
                 {/* <form className="d-flex flex-column gap-3" onSubmit={handleSubscribe}>
                   <label htmlFor="newsletterEmail" className="visually-hidden">
                     Email address

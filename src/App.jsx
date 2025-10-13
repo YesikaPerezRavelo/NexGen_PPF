@@ -5,7 +5,6 @@ import Footer from './layout/Footer'
 import { Routes, Route } from 'react-router-dom'
 import SideNavbar from './layout/SideNavbar'
 import Shop from './pages/Shop'
-// import Cart from './pages/Cart'  // si después lo querés usar
 import Login from './pages/Login'
 import AdminPanel from './pages/AdminPanel'
 import UserPanel from './pages/UserPanel'
@@ -13,6 +12,7 @@ import UnderConstruction from './pages/UnderConstruction'
 import ProtectedRoute from './routes/ProtectedRoute'
 import Cart from "./pages/Cart"
 import { CartProvider } from './sections/Cart/CartContext'
+import Contact from "./pages/Contact"
 
 
 
@@ -43,6 +43,7 @@ function App() {
   <Route path="/user" element={<ProtectedRoute><UserPanel /></ProtectedRoute>} /> 
   <Route path="/under-construction" element={<UnderConstruction />} /> 
     <Route path="/cart" element={<Cart />} />  
+    <Route path="/contact" element={<Contact />} />
 
       </Routes>
       <Footer />
