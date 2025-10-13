@@ -2,8 +2,8 @@ import { useEffect, useMemo, useState } from "react";
 import {
   Container, Row, Col, Card, Form, Button, Table, Alert, Modal
 } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import catalog from "../data/catalog.json";
-
 
 const CATS = {
   "architectural": ["clear-security", "exterior-window"],
@@ -11,15 +11,12 @@ const CATS = {
   "automotive-window": ["chameleon", "chip-dyed", "nano-carbon", "nano-ceramic"],
 };
 
-
 const EXTRA_KEY = "catalogExtras";
-const DEFAULT_IMAGE = "/images/testingImg.jpg"; // <-- tu imagen por defecto
-
+const DEFAULT_IMAGE = "/images/testingImg.jpg";
 
 export default function AdminPanel() {
   const [products, setProducts] = useState([]);
   const [msg, setMsg] = useState("");
-
 
   const [form, setForm] = useState({
     name: "",
@@ -29,19 +26,26 @@ export default function AdminPanel() {
     subcategory: "clear-security",
   });
 
-
   const [showEdit, setShowEdit] = useState(false);
   const [edit, setEdit] = useState(null);
 
+  // 👇 Necesario para redirigir
+  const navigate = useNavigate();
 
-  // Aplana JSON base
+  // 👇 onLogout DEBE vivir dentro del componente (y usar navigate del hook)
+  const onLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    localStorage.removeItem("expiresAt");
+    navigate("/login", { replace: true });
+  };
+
   const flattenFromCatalog = () => {
     const out = [];
     for (const catKey of Object.keys(catalog)) {
       for (const subKey of Object.keys(catalog[catKey])) {
         for (const p of catalog[catKey][subKey]) {
           out.push({
-            // id existe internamente pero NO se muestra
             id: Number(p.id),
             name: p.title,
             price: Number(p.price),
@@ -57,22 +61,17 @@ export default function AdminPanel() {
     return out;
   };
 
-
   useEffect(() => {
     const base = flattenFromCatalog();
     const extras = JSON.parse(localStorage.getItem(EXTRA_KEY) || "[]");
     setProducts([...base, ...extras]);
   }, []);
 
-
-  // Siguiente ID (interno, no visible)
   const nextId = useMemo(
     () => products.reduce((m, p) => Math.max(m, Number(p.id) || 0), 0) + 1,
     [products]
   );
 
-
-  // Form handlers
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
@@ -81,21 +80,17 @@ export default function AdminPanel() {
     }
   };
 
-
   const handleSubmit = (e) => {
     e.preventDefault();
     setMsg("");
-
 
     if (!form.name || !form.price) {
       setMsg("Name and price are required.");
       return;
     }
 
-
-    // Siempre usamos la imagen por defecto
     const newP = {
-      id: nextId, // no se muestra, solo para clave interna
+      id: nextId,
       name: form.name,
       price: parseFloat(form.price),
       stock: parseInt(form.stock || 0, 10),
@@ -105,25 +100,21 @@ export default function AdminPanel() {
       origin: "added",
     };
 
-
     const base = products.filter((p) => p.origin !== "added");
     const stored = JSON.parse(localStorage.getItem(EXTRA_KEY) || "[]");
     const updatedExtras = [newP, ...stored];
     localStorage.setItem(EXTRA_KEY, JSON.stringify(updatedExtras));
     setProducts([...base, ...updatedExtras]);
 
-
     setForm({ name: "", price: "", stock: "", category: form.category, subcategory: form.subcategory });
     setMsg("Added! Using default image.");
   };
-
 
   // Edit
   const openEdit = (p) => {
     setEdit({ ...p });
     setShowEdit(true);
   };
-
 
   const saveEdit = () => {
     if (!edit) return;
@@ -132,7 +123,7 @@ export default function AdminPanel() {
         ? {
             ...p,
             ...edit,
-            image: edit.image || DEFAULT_IMAGE, // por si limpian el campo en algún momento
+            image: edit.image || DEFAULT_IMAGE,
             origin: p.origin === "catalog" ? "added" : p.origin,
           }
         : p
@@ -143,7 +134,6 @@ export default function AdminPanel() {
     setShowEdit(false);
   };
 
-
   // Delete
   const handleDelete = (id) => {
     const updated = products.filter((p) => p.id !== id);
@@ -152,21 +142,25 @@ export default function AdminPanel() {
     localStorage.setItem(EXTRA_KEY, JSON.stringify(extras));
   };
 
-
   return (
     <Container className="py-5" style={{ marginTop: "5rem" }}>
       <Row className="justify-content-center">
         <Col xs={12} md={10}>
+         
+          <div className="text-end mb-3">
+            <Button variant="outline-secondary" size="sm" onClick={onLogout}>
+              Log out
+            </Button>
+          </div>
+
           <h2 className="fw-bold text-center mb-4">
             Admin <span className="text-danger">Panel</span>
           </h2>
-
 
           <Card className="mb-4 shadow-sm">
             <Card.Body>
               <h5 className="mb-3">New product</h5>
               {msg && <Alert variant="info">{msg}</Alert>}
-
 
               <Form onSubmit={handleSubmit}>
                 <Row className="g-3">
@@ -209,7 +203,6 @@ export default function AdminPanel() {
                     </Form.Group>
                   </Col>
 
-
                   <Col md={6}>
                     <Form.Group controlId="formCategory">
                       <Form.Label>Category</Form.Label>
@@ -224,7 +217,6 @@ export default function AdminPanel() {
                       </Form.Select>
                     </Form.Group>
                   </Col>
-
 
                   <Col md={6}>
                     <Form.Group controlId="formSubcategory">
@@ -242,7 +234,6 @@ export default function AdminPanel() {
                   </Col>
                 </Row>
 
-
                 <div className="text-center mt-4">
                   <Button type="submit" variant="outline-danger">
                     Save Product
@@ -251,7 +242,6 @@ export default function AdminPanel() {
               </Form>
             </Card.Body>
           </Card>
-
 
           <Card className="shadow-sm">
             <Card.Body>
@@ -302,7 +292,6 @@ export default function AdminPanel() {
           </Card>
         </Col>
       </Row>
-
 
       {/* Modal Edit */}
       <Modal show={showEdit} onHide={() => setShowEdit(false)}>
@@ -366,7 +355,6 @@ export default function AdminPanel() {
                   </Form.Group>
                 </Col>
               </Row>
-              {/* Sin campo de imagen: siempre usamos DEFAULT_IMAGE */}
             </Form>
           )}
         </Modal.Body>
@@ -378,3 +366,4 @@ export default function AdminPanel() {
     </Container>
   );
 }
+

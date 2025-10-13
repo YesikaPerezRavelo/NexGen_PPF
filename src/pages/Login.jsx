@@ -6,10 +6,11 @@ import PasswordToggleInput from "../sections/login/PasswordToggleInput";
 
 
 // ⚙️ Variables de entorno (Vite)
-const ADMIN_EMAIL = import.meta.env.VITE_ADMIN_EMAIL;
-const ADMIN_PASS  = import.meta.env.VITE_ADMIN_PASS;
-const USER_EMAIL  = import.meta.env.VITE_USER_EMAIL;
-const USER_PASS   = import.meta.env.VITE_USER_PASS;
+const ADMIN_EMAIL = "admin@nexgenppf.com";
+const ADMIN_PASS  = "panel12345";
+const USER_EMAIL  = "user@nexgenppf.com";
+const USER_PASS   = "12345";
+
 
 
 export default function Login() {
