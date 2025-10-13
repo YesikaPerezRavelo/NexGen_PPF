@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { addItem } from "../../features/cart/cartSlice";
+import { addItem } from "../../sections/Cart/CartContext";
 
 
 const TestAdd = () => {
@@ -20,7 +20,7 @@ const TestAdd = () => {
 
   return (
     <button onClick={handleClick} className="btn btn-danger">
-      Agregar producto test
+      Add Test Product
     </button>
   );
 };

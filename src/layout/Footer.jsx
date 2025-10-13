@@ -31,7 +31,7 @@ const Footer = () => {
             />
             <div>
               <p className="mb-1">Do you have any questions?</p>
-              <p className="text-secondary">PBX: (601) 370.22.00</p>
+              
             </div>
             <p className="mb-2">
               Lorem ipsum dolor sit amet consectetur. Etiam id enim diam

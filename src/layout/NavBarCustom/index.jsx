@@ -68,23 +68,44 @@ export default function NavBarCustom({
 
 
             {/* <CiUser size={iconSize} color={iconColor} style={{ cursor: "pointer" }} /> */}
-<NavLink to="/login" className="d-flex align-items-center">
-  <CiUser size={iconSize} color={iconColor} style={{ cursor: "pointer" }} />
-</NavLink>
+              <NavLink to="/login" className="d-flex align-items-center">
+              <CiUser size={iconSize} color={iconColor} style={{ cursor: "pointer" }} />
+                </NavLink>
 
 
             <div className="position-relative">
-              <IoCartOutline size={iconSize} color={iconColor} />
+              {/* <IoCartOutline size={iconSize} color={iconColor} />
               {cartCount > 0 && (
                 <Badge bg="danger" pill className="position-absolute top-0 start-100 translate-middle">
                   {cartCount}
                 </Badge>
-              )}
+              )} */}
+              <NavLink to="/cart" className="position-relative d-inline-flex align-items-center">
+  <IoCartOutline size={iconSize} color={iconColor} />
+  {cartCount > 0 && (
+    <Badge
+      bg="danger"
+      pill
+      className="position-absolute top-0 start-100 translate-middle"
+      style={{ pointerEvents: "none" }}  
+    >
+      {cartCount}
+    </Badge>
+  )}
+</NavLink>
+
             </div>
 
 
             <div className="position-relative ms-2">
-              <IoHeartOutline size={iconSize} color={iconColor} />
+              {/* <IoHeartOutline size={iconSize} color={iconColor} /> */}
+
+
+ <NavLink to="/under-construction" className="d-flex align-items-center">
+             <IoHeartOutline size={iconSize} color={iconColor} style={{ cursor: "pointer" }} />
+                </NavLink>
+
+
               {favCount > 0 && (
                 <Badge bg="danger" pill className="position-absolute top-0 start-100 translate-middle">
                   {favCount}

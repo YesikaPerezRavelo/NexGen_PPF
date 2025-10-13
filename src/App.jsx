@@ -11,6 +11,10 @@ import AdminPanel from './pages/AdminPanel'
 import UserPanel from './pages/UserPanel'
 import UnderConstruction from './pages/UnderConstruction'
 import ProtectedRoute from './routes/ProtectedRoute'
+import Cart from "./pages/Cart"
+import { CartProvider } from './sections/Cart/CartContext'
+
+
 
 
 function App() {
@@ -28,6 +32,7 @@ function App() {
 
   return (
     <>
+     <CartProvider>
       <SideNavbar cartCount={cartCount} />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -37,9 +42,11 @@ function App() {
   <Route path="/admin" element={<ProtectedRoute><AdminPanel /></ProtectedRoute>} />
   <Route path="/user" element={<ProtectedRoute><UserPanel /></ProtectedRoute>} /> 
   <Route path="/under-construction" element={<UnderConstruction />} /> 
+    <Route path="/cart" element={<Cart />} />  
 
       </Routes>
       <Footer />
+      </CartProvider>
     </>
   )
 }

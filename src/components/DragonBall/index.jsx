@@ -1,22 +1,21 @@
-// src/components/DragonBall.jsx
 import { useEffect, useMemo, useState } from "react";
 import { Card, Button, Spinner, Alert, Form } from "react-bootstrap";
 import catalog from "../../data/catalog.json";
 
 
 const DEFAULT_IMAGE = "/images/testingImg.jpg";
-const EXTRA_KEY = "catalogExtras"; // misma clave que usa AdminPanel
+const EXTRA_KEY = "catalogExtras"; 
 
 
 export default function DragonBall({ onAddToCart }) {
-  const [items, setItems] = useState([]);   // catálogo local + extras + API
+  const [items, setItems] = useState([]);  
   const [loading, setLoading] = useState(true);
   const [err, setErr] = useState("");
   const [q, setQ] = useState("");
   const [limit, setLimit] = useState(12);
 
 
-  // Aplana tu catalog.json (category -> subcategory -> array) a array plano
+  
   const flattenCatalog = useMemo(() => {
     const out = [];
     for (const catKey of Object.keys(catalog)) {
@@ -45,16 +44,15 @@ export default function DragonBall({ onAddToCart }) {
 
 
       try {
-        // 1) Catálogo local (JSON importado)
+   
         const base = flattenCatalog;
 
 
-        // 2) Extras desde localStorage (agregados/ediciones del AdminPanel)
         const extras = JSON.parse(localStorage.getItem(EXTRA_KEY) || "[]").map(
           (p) => ({
             id: `extra-${p.id}`,
             name: p.name,
-            image: p.image || DEFAULT_IMAGE, // <- usa default si no hay imagen
+            image: p.image || DEFAULT_IMAGE, 
             price: Number(p.price) || 2000,
             _origin: "extra",
             _category: p.category,
@@ -63,7 +61,7 @@ export default function DragonBall({ onAddToCart }) {
         );
 
 
-        // 3) API DragonBall (con precio “realista” y fallback de imagen)
+       
         let apiProducts = [];
         try {
           const res = await fetch("https://dragonball-api.com/api/characters");
@@ -84,7 +82,7 @@ export default function DragonBall({ onAddToCart }) {
             };
           });
         } catch {
-          // si falla la API, mostramos igual el catálogo local + extras
+     
           apiProducts = [];
         }
 
@@ -114,14 +112,14 @@ export default function DragonBall({ onAddToCart }) {
       image: item.image || DEFAULT_IMAGE,
       price: item.price,
     };
-    // compat: tu SideNavbar escucha este evento
+
     window.dispatchEvent(new CustomEvent("cart:add", { detail: payload }));
-    // si pasás onAddToCart por props, también lo llamamos
+    
     onAddToCart?.(payload);
   };
 
 
-  // si una imagen falla, forzamos la default
+
   const handleImgError = (e) => {
     if (e.currentTarget.src.endsWith(DEFAULT_IMAGE)) return;
     e.currentTarget.src = DEFAULT_IMAGE;
@@ -131,7 +129,7 @@ export default function DragonBall({ onAddToCart }) {
 
   return (
     <div className="container py-4">
-      {/* Buscador */}
+  
       <Form className="mb-3">
         <Form.Control
           type="text"

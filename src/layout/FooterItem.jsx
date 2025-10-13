@@ -12,7 +12,7 @@ const FooterItem = ({ title, links, collapsible = false }) => {
     const handleResize = () => {
       const mobile = window.innerWidth < 950;
       setIsMobile(mobile);
-      setIsOpen(!collapsible || !mobile); // abierto por defecto en desktop
+      setIsOpen(!collapsible || !mobile); 
     };
     handleResize();
     window.addEventListener("resize", handleResize);

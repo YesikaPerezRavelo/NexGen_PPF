@@ -1,32 +1,24 @@
 import CartItem from "./CartItem";
 
-
-const CartItemsTable = ({ cartProducts }) => {
-  if (!cartProducts || cartProducts.length === 0) {
+export default function CartItemsTable({ cartProducts }) {
+  if (!cartProducts || cartProducts.length === 0)
     return (
-      <div className="card">
-        <div className="card-header bg-dark text-white">
-          No hay productos en el carrito
-        </div>
-        <div className="card-body text-center">
-          <h5 className="card-title m-0">Carrito vacío</h5>
-        </div>
+      <div className="alert alert-secondary text-center">
+        Tu carrito está vacío
       </div>
     );
-  }
-
 
   return (
     <div className="table-responsive shadow-sm bg-white rounded">
       <table className="table align-middle m-0">
         <thead className="table-dark">
           <tr>
-            <th style={{ width: 140 }}>Producto</th>
-            <th>Nombre</th>
+            <th>Imagen</th>
+            <th>Producto</th>
             <th>Precio</th>
-            <th style={{ width: 180 }}>Cantidad</th>
-            <th>Total</th>
-            <th style={{ width: 80 }}></th>
+            <th>Cantidad</th>
+            <th>Subtotal</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -34,7 +26,7 @@ const CartItemsTable = ({ cartProducts }) => {
             <CartItem
               key={`cart-item-${p.id}`}
               id={p.id}
-              name={p.name}
+              name={p.name ?? p.title}
               image={p.image}
               price={p.price}
               initQuantity={p.quantity}
@@ -44,7 +36,4 @@ const CartItemsTable = ({ cartProducts }) => {
       </table>
     </div>
   );
-};
-
-
-export default CartItemsTable;
+}

@@ -1,4 +1,4 @@
-# NexGenPPF - Sistema de Gestión de Productos
+# NexGenPPF - Sistema de Gestión de Entrenamientos y Productos
 
 **NexGenPPF** es un proyecto diseñado para gestionar la selección de productos de protección automotriz y arquitectónica de manera interactiva y visual.  
 
@@ -45,12 +45,6 @@ Los productos pueden provenir de 3 fuentes:
    Se cargan productos de ejemplo con nombre, imagen y precio aleatorio.
 
 
-## 🧠 Para probar la parte de usuarios 
-- admin@nexgenppf.com
-- panel12345
-
-- user@nexgenppf.com
-- 12345
 
 ---
 
