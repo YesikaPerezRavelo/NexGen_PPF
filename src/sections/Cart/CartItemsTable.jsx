@@ -4,7 +4,7 @@ export default function CartItemsTable({ cartProducts }) {
   if (!cartProducts || cartProducts.length === 0)
     return (
       <div className="alert alert-secondary text-center">
-        Tu carrito está vacío
+       Cart is empty.
       </div>
     );
 
@@ -13,10 +13,10 @@ export default function CartItemsTable({ cartProducts }) {
       <table className="table align-middle m-0">
         <thead className="table-dark">
           <tr>
-            <th>Imagen</th>
-            <th>Producto</th>
-            <th>Precio</th>
-            <th>Cantidad</th>
+            <th>Image</th>
+            <th>Product</th>
+            <th>Price</th>
+            <th>Quantity</th>
             <th>Subtotal</th>
             <th></th>
           </tr>

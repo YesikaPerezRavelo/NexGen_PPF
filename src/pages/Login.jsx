@@ -184,6 +184,8 @@ import { Container, Card, Form, Button, Alert, InputGroup } from "react-bootstra
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import DynamicBackground from "../components/DynamicBackground";
+
 
 
 export default function Login() {
@@ -193,6 +195,11 @@ export default function Login() {
   const [err, setErr] = useState("");
   const navigate = useNavigate();
   const { login } = useAuth();
+  const backgrounds = [
+    "/images/boats.jpg",
+    "/images/building.jpg",
+    "/images/car.jpg",
+  ]
 
 
  const handleSubmit = async (e) => {
@@ -222,7 +229,7 @@ export default function Login() {
 
 
   return (
-    <div className="container py-5 pt-0" style={{ marginTop: "10rem" }}>
+    <DynamicBackground images={backgrounds} interval={4000}>
     <Container className="py-5" style={{ maxWidth: 520 }}>
       <Card className="shadow-sm">
         <Card.Body>
@@ -261,9 +268,12 @@ export default function Login() {
             </Form.Group>
 
 
-            <Button type="submit" variant="outline-danger" className="w-100">
+            <Button type="submit" variant="outline-dark" className="w-50 border-100 d-block mx-auto rounded-3">
               Entrar
             </Button>
+
+
+
           </Form>
 
 
@@ -280,6 +290,6 @@ export default function Login() {
           </div>
         </Card.Body>
       </Card>
-    </Container></div>
+    </Container></DynamicBackground>
   );
 }

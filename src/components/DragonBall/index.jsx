@@ -112,14 +112,10 @@ export default function DragonBall({ onAddToCart }) {
 
     // ✅ SweetAlert: toast de éxito
     Swal.fire({
-      icon: "success",
-      title: `${item.name} added to cart`,
-      toast: true,
-      position: "top-end",
-      showConfirmButton: false,
-      timer: 1400,
-      timerProgressBar: true,
-    });
+  title: "Nice! Your new item is in the cart.",
+  imageUrl: "./images/sweetAlert.webp",
+  draggable: true
+});
   };
 
   const handleImgError = (e) => {
