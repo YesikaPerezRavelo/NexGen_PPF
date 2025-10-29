@@ -1,78 +1,78 @@
-// import React from "react";
-// import PropTypes from "prop-types";
-// import { Card, Button, Badge } from "react-bootstrap";
+import PropTypes from "prop-types";
+import { Card, Button } from "react-bootstrap";
+import { DEFAULT_IMAGE } from "../../constants/shop";
 
 
-// export default function ProductCard({
-//   item,
-//   onAdd,
-//   imageHeight = 350,
-//   variant = "default",
-//   showOrigin = true,
-// }) {
-//   const title = item.title ?? item.name ?? "Producto";
-//   const imgSrc = item.image; // respetamos exactamente lo que viene del JSON
-//   const price = Number(item.price ?? 0);
+export default function ProductCard({ item, onAdd }) {
+  if (!item) return null;
 
-//   const handleAdd = () => {
-//     const payload = {
-//       id: item.id,
-//       title,
-//       price,
-//       image: imgSrc,
-//       qty: 1,
-//       meta: item.meta ?? item._category ? { category: item._category, subcategory: item._subcategory ?? item.__sub } : item.meta,
-//     };
-//     onAdd?.(payload);
-//   };
 
-//   const handleImgError = (e) => {
-//     // fallback visual si la ruta está rota (no sobrescribimos si image viene bien)
-//     // reemplazá el path por el que prefieras (o dejá vacío para mostrar espacio)
-//     e.currentTarget.onerror = null;
-//     e.currentTarget.src = "/images/testingImg.jpg";
-//   };
+  const safeImage = item?.image || DEFAULT_IMAGE;
+  const safeName = item?.name || "Desconocido";
+  const safePrice = Number.isFinite(Number(item?.price)) ? Number(item.price) : 2000;
 
-//   return (
-//     <Card className={variant === "compact" ? "h-100 product-card-compact shadow-sm" : "h-100 shadow-sm"}>
-//       <div className="ratio ratio-1x1 bg-light">
-//         <img
-//           src={imgSrc}
-//           alt={title}
-//           loading="lazy"
-//           style={{ objectFit: "cover", height: imageHeight }}
-//           onError={handleImgError}
-//         />
-//       </div>
 
-//       <Card.Body className="d-flex flex-column">
-//         <Card.Title className="fs-6 mb-1 text-truncate" title={title}>
-//           {title}
-//         </Card.Title>
+  const handleImgError = (e) => {
+    if (e.currentTarget.src.endsWith(DEFAULT_IMAGE)) return;
+    e.currentTarget.src = DEFAULT_IMAGE;
+    e.currentTarget.style.opacity = 1;
+  };
 
-//         {showOrigin && item._origin && (
-//           <div className="mb-2">
-//             <Badge bg={item._origin === "api" ? "info" : item._origin === "extra" ? "success" : "secondary"}>
-//               {item._origin.toUpperCase()}
-//             </Badge>
-//           </div>
-//         )}
 
-//         <div className="mt-auto d-flex justify-content-between align-items-center">
-//           <span className="fw-bold">${price.toFixed(2)}</span>
-//           <Button size="sm" onClick={handleAdd}>
-//             Add to Cart
-//           </Button>
-//         </div>
-//       </Card.Body>
-//     </Card>
-//   );
-// }
+  const handleAddClick = () => {
+    // Si onAdd no es función, no explota
+    if (typeof onAdd === "function") {
+      onAdd({
+        id: item.id,
+        name: safeName,
+        image: safeImage,
+        price: safePrice,
+        _origin: item?._origin ?? "api",
+      });
+    }
+  };
 
-// ProductCard.propTypes = {
-//   item: PropTypes.object.isRequired,
-//   onAdd: PropTypes.func,
-//   imageHeight: PropTypes.number,
-//   variant: PropTypes.oneOf(["default", "compact"]),
-//   showOrigin: PropTypes.bool,
-// };
+
+  return (
+    <Card className="h-100 shadow-sm">
+      <Card.Img
+        src={safeImage}
+        alt={safeName}
+        style={{ objectFit: "contain", height: 450 }}
+        loading="lazy"
+        onError={handleImgError}
+      />
+      <Card.Body className="d-flex flex-column">
+        <Card.Title className="mb-1">{safeName}</Card.Title>
+        <div className="mb-2">
+          <span className="text-muted">Price: </span>
+          <strong>US${safePrice.toLocaleString()}</strong>
+          <div>
+            <small className="text-secondary">{item?._origin || "API"}</small>
+          </div>
+        </div>
+        <Button variant="dark" className="mt-auto" onClick={handleAddClick}>
+          Add to cart
+        </Button>
+      </Card.Body>
+    </Card>
+  );
+}
+
+
+ProductCard.propTypes = {
+  item: PropTypes.shape({
+    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    name: PropTypes.string,
+    image: PropTypes.string,
+    price: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    _origin: PropTypes.string,
+  }),
+  onAdd: PropTypes.func,
+};
+
+
+ProductCard.defaultProps = {
+  item: null,
+  onAdd: undefined,
+};

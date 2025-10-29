@@ -72,12 +72,13 @@ import ProtectedRoute from "./routes/ProtectedRoute";
 import Cart from "./pages/Cart";
 import Contact from "./pages/Contact";
 import RandomUsers from "./pages/RandomUsers";
+import DragonBallAPI from "./pages/DragonBallAPI";
 
 
-// 🧰 Providers
+
 import { CartProvider } from "./sections/Cart/CartContext";
-import { AuthProvider } from "./context/AuthContext";     // << nuevo
-import { UserProvider } from "./context/UserContext";     // << si usás random user
+import { AuthProvider } from "./context/AuthContext";     
+import { UserProvider } from "./context/UserContext";     
 
 
 export default function App() {
@@ -102,6 +103,7 @@ export default function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/shop" element={<Shop onAddToCart={handleAddToCart} />} />
+            <Route path="/dragonball" element={<DragonBallAPI onAddToCart={handleAddToCart} />} />
             <Route path="/login" element={<Login />} />
 
 

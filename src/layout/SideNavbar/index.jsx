@@ -59,7 +59,7 @@ function SideNavbar() {
         { label: "Automotive", href: "/shop" },
         { label: "Window", href: "/shop" },
         { label: "Architectural", href: "/shop" },
-        { label: "Dragon Ball Z", href: "/shop" },
+        { label: "Dragon Ball Z", href: "/dragonball" },
       ],
     },
   ];
