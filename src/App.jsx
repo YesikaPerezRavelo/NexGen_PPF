@@ -73,6 +73,7 @@ import Cart from "./pages/Cart";
 import Contact from "./pages/Contact";
 import RandomUsers from "./pages/RandomUsers";
 import DragonBallAPI from "./pages/DragonBallAPI";
+import Crud from "./pages/Crud";
 
 
 
@@ -117,7 +118,7 @@ export default function App() {
               }
             />
             <Route path="/random-users" element={<RandomUsers />} />
-
+             <Route path="/crud" element={<Crud />} /> 
             <Route
               path="/user"
               element={
