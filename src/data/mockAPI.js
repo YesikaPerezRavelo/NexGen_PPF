@@ -1,5 +1,5 @@
 export const API_BASE = "https://690a5e4f1a446bb9cc2265bd.mockapi.io";
-export const PRODUCTS_RESOURCE = "productos";
+export const PRODUCTS_RESOURCE = "Products";
 export const API_URL = `${API_BASE}/${PRODUCTS_RESOURCE}`;
 
 
