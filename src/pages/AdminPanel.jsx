@@ -29,10 +29,10 @@ export default function AdminPanel() {
   const [showEdit, setShowEdit] = useState(false);
   const [edit, setEdit] = useState(null);
 
-  // 👇 Necesario para redirigir
+
   const navigate = useNavigate();
 
-  // 👇 onLogout DEBE vivir dentro del componente (y usar navigate del hook)
+ 
   const onLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
@@ -143,19 +143,34 @@ export default function AdminPanel() {
   };
 
   return (
-    <Container className="py-5" style={{ marginTop: "5rem" }}>
-      <Row className="justify-content-center">
-        <Col xs={12} md={10}>
-         
-          <div className="text-end mb-3">
-            <Button variant="outline-secondary" size="sm" onClick={onLogout}>
-              Log out
-            </Button>
-          </div>
+     <Container className="py-5" style={{ marginTop: "5rem" }}>
+    <Row className="justify-content-center">
+      <Col xs={12} md={10}>
+        
+       
+        <div className="d-flex justify-content-between align-items-center mb-3">
+          <Button
+            variant="outline-danger"
+            size="sm"
+            onClick={() => navigate("/admin/api")}
+          >
+            API products
+          </Button>
 
-          <h2 className="fw-bold text-center mb-4">
-            Admin <span className="text-danger">Panel</span>
-          </h2>
+
+          <Button
+            variant="outline-secondary"
+            size="sm"
+            onClick={onLogout}
+          >
+            Log out
+          </Button>
+        </div>
+
+
+        <h2 className="fw-bold text-center mb-4">
+          Admin <span className="text-danger">Panel (JSON)</span>
+        </h2>
 
           <Card className="mb-4 shadow-sm">
             <Card.Body>

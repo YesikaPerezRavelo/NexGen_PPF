@@ -56,10 +56,11 @@ function SideNavbar() {
       title: "Products",
       dropdown: true,
       items: [
-        { label: "Automotive", href: "/shop" },
+        { label: "Automotive", href: "/automotive-protection" },
         { label: "Window", href: "/shop" },
-        { label: "Architectural", href: "/shop" },
+        { label: "Architectural", href: "/building-products" },
         { label: "Dragon Ball Z", href: "/dragonball" },
+        { label: "Mock API", href: "/mock-api-products" },
       ],
     },
   ];

@@ -80,6 +80,10 @@ import Crud from "./pages/Crud";
 import { CartProvider } from "./sections/Cart/CartContext";
 import { AuthProvider } from "./context/AuthContext";     
 import { UserProvider } from "./context/UserContext";     
+import BuildingPage from "./pages/BuildingPage";
+import ProtectionAutoPage from "./pages/ProtectionAutoPage";
+import WindowAutoProtectionPage from "./pages/WindowAutoProtectionPage";
+import MockApiPage from "./pages/MockApiPage";
 
 
 export default function App() {
@@ -105,7 +109,14 @@ export default function App() {
             <Route path="/" element={<Home />} />
             <Route path="/shop" element={<Shop onAddToCart={handleAddToCart} />} />
             <Route path="/dragonball" element={<DragonBallAPI onAddToCart={handleAddToCart} />} />
+            <Route path="/building-products" element={<BuildingPage onAddToCart={handleAddToCart}/>} />
+            
+            <Route path="/automotive-protection" element={<ProtectionAutoPage onAddToCart={handleAddToCart} />}/>
+            <Route path="/auto-window-protection" element={<WindowAutoProtectionPage onAddToCart={handleAddToCart} />}/>
+            <Route path="/mock-api-products" element={<MockApiPage onAddToCart={handleAddToCart} />}/>
+
             <Route path="/login" element={<Login />} />
+
 
 
             {/* protegidas */}
@@ -117,8 +128,21 @@ export default function App() {
                 </ProtectedRoute>
               }
             />
+
+ 
+             <Route
+              path="/admin/api"
+              element={
+               <ProtectedRoute allow={["admin"]}>
+                <Crud />
+              </ProtectedRoute>
+              }
+             />
+
+
+
             <Route path="/random-users" element={<RandomUsers />} />
-             <Route path="/crud" element={<Crud />} /> 
+             {/* <Route path="/crud" element={<Crud />} />  */}
             <Route
               path="/user"
               element={
@@ -132,6 +156,7 @@ export default function App() {
             <Route path="/under-construction" element={<UnderConstruction />} />
             <Route path="/cart" element={<Cart />} />
             <Route path="/contact" element={<Contact />} />
+     
           </Routes>
 
 
