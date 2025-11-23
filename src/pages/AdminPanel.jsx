@@ -149,23 +149,38 @@ export default function AdminPanel() {
         
        
         <div className="d-flex justify-content-between align-items-center mb-3">
-          <Button
-            variant="outline-danger"
-            size="sm"
-            onClick={() => navigate("/admin/api")}
-          >
-            API products
-          </Button>
 
 
-          <Button
-            variant="outline-secondary"
-            size="sm"
-            onClick={onLogout}
-          >
-            Log out
-          </Button>
-        </div>
+  <div className="d-flex gap-3">
+    <Button
+      variant="outline-danger"
+      size="sm"
+      onClick={() => navigate("/admin/api")}
+    >
+      API products
+    </Button>
+
+
+    <Button
+      variant="outline-danger"
+      size="sm"
+      onClick={() => navigate("/random-users")}
+    >
+      Users
+    </Button>
+  </div>
+
+
+  <Button
+    variant="outline-secondary"
+    size="sm"
+    onClick={onLogout}
+  >
+    Log out
+  </Button>
+
+
+</div>
 
 
         <h2 className="fw-bold text-center mb-4">

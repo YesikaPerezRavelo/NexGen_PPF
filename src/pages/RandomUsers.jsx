@@ -10,7 +10,7 @@ export default function RandomUsers() {
       <Card className="shadow-sm">
         <Card.Body>
           <h2 className="fw-bold text-center mb-3">
-            Random <span className="text-danger">Users</span>
+            Search <span className="text-danger">Users</span>
           </h2>
 
 
