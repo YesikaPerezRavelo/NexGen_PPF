@@ -117,3 +117,28 @@ html, body {
   color: #fff !important;
 }
 
+/* Ajuste para que el título NO quede pegado arriba en mobile */
+.carousel-caption {
+  padding-top: 4rem !important;
+}
+
+
+/* Pantallas muy pequeñas */
+@media (max-width: 576px) {
+  .carousel-caption {
+    padding-top: 6rem !important; /* más espacio arriba */
+    margin-bottom: 2rem !important;
+    text-align: left;
+  }
+
+
+  .carousel-caption h1 {
+    font-size: 1.9rem !important; /* evita que el título sea gigante */
+    line-height: 1.2 !important;
+  }
+
+
+  .carousel-caption p {
+    font-size: 1rem !important;
+  }
+}

@@ -5,6 +5,7 @@ import {
 } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { Helmet } from "react-helmet-async";
 
 
 export default function UserPanel() {
@@ -25,7 +26,6 @@ export default function UserPanel() {
   }, [navigate, token, user?.role]);
 
 
- 
   const stats = [
     { label: "Orders", value: 3 },
     { label: "Returns", value: 1 },
@@ -287,7 +287,7 @@ export default function UserPanel() {
             <Col md={6}>
               <Form.Group controlId="setName">
                 <Form.Label>Name</Form.Label>
-                <Form.Control type="text" placeholder="Your name" defaultValue="Jessica" />
+                <Form.Control type="text" placeholder="Your name" defaultValue="User name" />
               </Form.Group>
             </Col>
             <Col md={6}>
@@ -332,53 +332,64 @@ export default function UserPanel() {
 
 
   return (
-    <Container className="py-5" style={{ marginTop: "5rem" }}>
-      <Row className="g-4">
-        {/* Sidebar */}
-        <Col xs={12} md={4} lg={3}>
-          <Card className="shadow-sm">
-            <Card.Body>
-              <div className="d-flex align-items-center gap-3 mb-3">
-                <div className="rounded-circle bg-dark" style={{ width: 48, height: 48 }} />
-                <div>
-                  <div className="fw-semibold">{user?.email || "User"}</div>
-                  <small className="text-muted">My Account</small>
+    <>
+      <Helmet htmlAttributes={{ lang: "en" }}>
+        <title>User | NexGenPPF</title>
+        <meta
+          name="description"
+          content="View and manage your NexGen PPF account: orders, wishlist, addresses, coupons, returns, support and account settings."
+        />
+      </Helmet>
+
+
+      <Container className="py-5" style={{ marginTop: "5rem" }}>
+        <Row className="g-4">
+          {/* Sidebar */}
+          <Col xs={12} md={4} lg={3}>
+            <Card className="shadow-sm">
+              <Card.Body>
+                <div className="d-flex align-items-center gap-3 mb-3">
+                  <div className="rounded-circle bg-dark" style={{ width: 48, height: 48 }} />
+                  <div>
+                    <div className="fw-semibold">{user?.email || "User"}</div>
+                    <small className="text-muted">My Account</small>
+                  </div>
                 </div>
-              </div>
 
 
-              <ListGroup variant="flush">
-                <ListGroup.Item action active={active==="overview"} onClick={()=>setActive("overview")}>Overview</ListGroup.Item>
-                <ListGroup.Item action active={active==="orders"} onClick={()=>setActive("orders")}>Orders</ListGroup.Item>
-                <ListGroup.Item action active={active==="wishlist"} onClick={()=>setActive("wishlist")}>Wishlist</ListGroup.Item>
-                <ListGroup.Item action active={active==="addresses"} onClick={()=>setActive("addresses")}>Addresses</ListGroup.Item>
-                <ListGroup.Item action active={active==="coupons"} onClick={()=>setActive("coupons")}>Coupons</ListGroup.Item>
-                <ListGroup.Item action active={active==="returns"} onClick={()=>setActive("returns")}>Returns</ListGroup.Item>
-                <ListGroup.Item action active={active==="support"} onClick={()=>setActive("support")}>Support</ListGroup.Item>
-                <ListGroup.Item action active={active==="settings"} onClick={()=>setActive("settings")}>Settings</ListGroup.Item>
-              </ListGroup>
+                <ListGroup variant="flush">
+                  <ListGroup.Item action active={active==="overview"} onClick={()=>setActive("overview")}>Overview</ListGroup.Item>
+                  <ListGroup.Item action active={active==="orders"} onClick={()=>setActive("orders")}>Orders</ListGroup.Item>
+                  <ListGroup.Item action active={active==="wishlist"} onClick={()=>setActive("wishlist")}>Wishlist</ListGroup.Item>
+                  <ListGroup.Item action active={active==="addresses"} onClick={()=>setActive("addresses")}>Addresses</ListGroup.Item>
+                  <ListGroup.Item action active={active==="coupons"} onClick={()=>setActive("coupons")}>Coupons</ListGroup.Item>
+                  <ListGroup.Item action active={active==="returns"} onClick={()=>setActive("returns")}>Returns</ListGroup.Item>
+                  <ListGroup.Item action active={active==="support"} onClick={()=>setActive("support")}>Support</ListGroup.Item>
+                  <ListGroup.Item action active={active==="settings"} onClick={()=>setActive("settings")}>Settings</ListGroup.Item>
+                </ListGroup>
 
 
-              <div className="d-grid mt-3">
-                <Button variant="outline-secondary" onClick={onLogout}>Log out</Button>
-              </div>
-            </Card.Body>
-          </Card>
-        </Col>
+                <div className="d-grid mt-3">
+                  <Button variant="outline-secondary" onClick={onLogout}>Log out</Button>
+                </div>
+              </Card.Body>
+            </Card>
+          </Col>
 
 
-        {/* Content */}
-        <Col xs={12} md={8} lg={9}>
-          {active === "overview" && <Overview/>}
-          {active === "orders" && <Orders/>}
-          {active === "wishlist" && <WishList/>}
-          {active === "addresses" && <Addresses/>}
-          {active === "coupons" && <Coupons/>}
-          {active === "returns" && <Returns/>}
-          {active === "support" && <Support/>}
-          {active === "settings" && <Settings/>}
-        </Col>
-      </Row>
-    </Container>
+          {/* Content */}
+          <Col xs={12} md={8} lg={9}>
+            {active === "overview" && <Overview/>}
+            {active === "orders" && <Orders/>}
+            {active === "wishlist" && <WishList/>}
+            {active === "addresses" && <Addresses/>}
+            {active === "coupons" && <Coupons/>}
+            {active === "returns" && <Returns/>}
+            {active === "support" && <Support/>}
+            {active === "settings" && <Settings/>}
+          </Col>
+        </Row>
+      </Container>
+    </>
   );
 }

@@ -9,8 +9,8 @@ export default function CargarBotonDeUsuario() {
 
   return (
     <div className="d-flex justify-content-center mt-3">
-      <Button variant="primary" onClick={fetchRandomUser} disabled={loadingUser}>
-        {loadingUser ? "Cargando..." : "Cargar Nuevo Usuario"}
+      <Button variant="danger" onClick={fetchRandomUser} disabled={loadingUser}>
+        {loadingUser ? "Search..." : "Find new user"}
       </Button>
     </div>
   );

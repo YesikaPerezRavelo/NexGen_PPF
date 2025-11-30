@@ -1,14 +1,10 @@
-import { useState } from "react";
 import {
   Navbar,
   Container,
   Nav,
   NavDropdown,
-  Form,
-  Button,
   Badge,
 } from "react-bootstrap";
-import { IoMdSearch } from "react-icons/io";
 import { CiUser } from "react-icons/ci";
 import { IoCartOutline, IoHeartOutline } from "react-icons/io5";
 import { NavLink } from "react-router-dom";
@@ -18,21 +14,11 @@ export default function NavBarCustom({
   logoSrc = "/images/LOGO.png",
   brand = "Mi Sitio",
   links = [],
-  onSearchSubmit,
   cartCount = 0,
   favCount = 0,
   iconColor = "#fff",
   iconSize = 24,
 }) {
-  const [query, setQuery] = useState("");
-
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onSearchSubmit?.(query);
-  };
-
-
   // 👉 Links comunes para desktop y mobile
   const renderLinks = () => (
     <Nav className="me-auto my-2 my-lg-10" navbarScroll>
@@ -55,33 +41,20 @@ export default function NavBarCustom({
   );
 
 
-  // 👉 Zona derecha (buscador + íconos), común para desktop y mobile
+  // 👉 Zona derecha: solo user / cart / likes
   const renderActions = () => (
-    <Form
-      className="d-flex flex-wrap align-items-center gap-3 mt-3 mt-lg-0"
-      onSubmit={handleSubmit}
-    >
-      <div className="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
-        <IoMdSearch size={iconSize} color={iconColor} className="me-2" />
-        <Form.Control
-          type="search"
-          placeholder="Search"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-        />
-      </div>
-
-
-      <Button variant="outline-light" type="submit">
-        Search
-      </Button>
-
-
+    <div className="d-flex align-items-center gap-3 mt-3 mt-lg-0">
+      {/* User */}
       <NavLink to="/login" className="d-flex align-items-center">
-        <CiUser size={iconSize} color={iconColor} style={{ cursor: "pointer" }} />
+        <CiUser
+          size={iconSize}
+          color={iconColor}
+          style={{ cursor: "pointer" }}
+        />
       </NavLink>
 
 
+      {/* Cart */}
       <div className="position-relative">
         <NavLink
           to="/cart"
@@ -102,6 +75,7 @@ export default function NavBarCustom({
       </div>
 
 
+      {/* Favs */}
       <div className="position-relative ms-2">
         <NavLink
           to="/under-construction"
@@ -125,7 +99,7 @@ export default function NavBarCustom({
           </Badge>
         )}
       </div>
-    </Form>
+    </div>
   );
 
 
@@ -176,24 +150,20 @@ export default function NavBarCustom({
 
 
           <Navbar.Toggle aria-controls="navbarScrollMobile" />
-          {/* <Navbar.Collapse id="navbarScrollMobile">
-            {renderLinks()}
-            <div className="mt-3 w-100">{renderActions()}</div>
-          </Navbar.Collapse> */}
+
 
           <Navbar.Collapse id="navbarScrollMobile">
-  {/* 1️⃣ Primero: Search + user + carrito + likes */}
-  <div className="mt-3 w-100">
-    {renderActions()}
-  </div>
+            {/* 1️⃣ Primero: user + cart + likes */}
+            <div className="mt-3 w-100 d-flex justify-content-start">
+              {renderActions()}
+            </div>
 
 
-  {/* 2️⃣ Después: About / Contact / Products */}
-  <div className="mt-3">
-    {renderLinks()}
-  </div>
-</Navbar.Collapse>
-
+            {/* 2️⃣ Después: About / Contact / Products */}
+            <div className="mt-3">
+              {renderLinks()}
+            </div>
+          </Navbar.Collapse>
         </Container>
       </Navbar>
     </>

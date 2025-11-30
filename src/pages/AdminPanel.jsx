@@ -3,7 +3,9 @@ import {
   Container, Row, Col, Card, Form, Button, Table, Alert, Modal
 } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet-async";   // 👈 nuevo
 import catalog from "../data/catalog.json";
+
 
 const CATS = {
   "architectural": ["clear-security", "exterior-window"],
@@ -11,12 +13,15 @@ const CATS = {
   "automotive-window": ["chameleon", "chip-dyed", "nano-carbon", "nano-ceramic"],
 };
 
+
 const EXTRA_KEY = "catalogExtras";
 const DEFAULT_IMAGE = "/images/testingImg.jpg";
+
 
 export default function AdminPanel() {
   const [products, setProducts] = useState([]);
   const [msg, setMsg] = useState("");
+
 
   const [form, setForm] = useState({
     name: "",
@@ -26,19 +31,21 @@ export default function AdminPanel() {
     subcategory: "clear-security",
   });
 
+
   const [showEdit, setShowEdit] = useState(false);
   const [edit, setEdit] = useState(null);
 
 
   const navigate = useNavigate();
 
- 
+
   const onLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     localStorage.removeItem("expiresAt");
     navigate("/login", { replace: true });
   };
+
 
   const flattenFromCatalog = () => {
     const out = [];
@@ -61,16 +68,19 @@ export default function AdminPanel() {
     return out;
   };
 
+
   useEffect(() => {
     const base = flattenFromCatalog();
     const extras = JSON.parse(localStorage.getItem(EXTRA_KEY) || "[]");
     setProducts([...base, ...extras]);
   }, []);
 
+
   const nextId = useMemo(
     () => products.reduce((m, p) => Math.max(m, Number(p.id) || 0), 0) + 1,
     [products]
   );
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -80,14 +90,17 @@ export default function AdminPanel() {
     }
   };
 
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setMsg("");
+
 
     if (!form.name || !form.price) {
       setMsg("Name and price are required.");
       return;
     }
+
 
     const newP = {
       id: nextId,
@@ -100,21 +113,31 @@ export default function AdminPanel() {
       origin: "added",
     };
 
+
     const base = products.filter((p) => p.origin !== "added");
     const stored = JSON.parse(localStorage.getItem(EXTRA_KEY) || "[]");
     const updatedExtras = [newP, ...stored];
     localStorage.setItem(EXTRA_KEY, JSON.stringify(updatedExtras));
     setProducts([...base, ...updatedExtras]);
 
-    setForm({ name: "", price: "", stock: "", category: form.category, subcategory: form.subcategory });
+
+    setForm({
+      name: "",
+      price: "",
+      stock: "",
+      category: form.category,
+      subcategory: form.subcategory
+    });
     setMsg("Added! Using default image.");
   };
+
 
   // Edit
   const openEdit = (p) => {
     setEdit({ ...p });
     setShowEdit(true);
   };
+
 
   const saveEdit = () => {
     if (!edit) return;
@@ -134,6 +157,7 @@ export default function AdminPanel() {
     setShowEdit(false);
   };
 
+
   // Delete
   const handleDelete = (id) => {
     const updated = products.filter((p) => p.id !== id);
@@ -142,104 +166,279 @@ export default function AdminPanel() {
     localStorage.setItem(EXTRA_KEY, JSON.stringify(extras));
   };
 
+
   return (
-     <Container className="py-5" style={{ marginTop: "5rem" }}>
-    <Row className="justify-content-center">
-      <Col xs={12} md={10}>
-        
-       
-        <div className="d-flex justify-content-between align-items-center mb-3">
+    <>
+    
+      <Helmet htmlAttributes={{ lang: "en" }}>
+        <title> Admin | NexGenPPF</title>
+        <meta
+          name="description"
+          content="Admin panel to manage products for automotive, building and marine applications. Add, edit and organize the full protection catalog."
+        />
+      </Helmet>
 
 
-  <div className="d-flex gap-3">
-    <Button
-      variant="outline-danger"
-      size="sm"
-      onClick={() => navigate("/admin/api")}
-    >
-      API products
-    </Button>
+      <Container className="py-5" style={{ marginTop: "5rem" }}>
+        <Row className="justify-content-center">
+          <Col xs={12} md={10}>
+            <div className="d-flex justify-content-between align-items-center mb-3">
+              <div className="d-flex gap-3">
+                <Button
+                  variant="outline-danger"
+                  size="sm"
+                  onClick={() => navigate("/admin/api")}
+                >
+                  API products
+                </Button>
 
 
-    <Button
-      variant="outline-danger"
-      size="sm"
-      onClick={() => navigate("/random-users")}
-    >
-      Users
-    </Button>
-  </div>
+                <Button
+                  variant="outline-danger"
+                  size="sm"
+                  onClick={() => navigate("/random-users")}
+                >
+                  Users
+                </Button>
+              </div>
 
 
-  <Button
-    variant="outline-secondary"
-    size="sm"
-    onClick={onLogout}
-  >
-    Log out
-  </Button>
+              <Button
+                variant="outline-secondary"
+                size="sm"
+                onClick={onLogout}
+              >
+                Log out
+              </Button>
+            </div>
 
 
-</div>
+            <h2 className="fw-bold text-center mb-4">
+              Admin <span className="text-danger">Panel (JSON)</span>
+            </h2>
 
 
-        <h2 className="fw-bold text-center mb-4">
-          Admin <span className="text-danger">Panel (JSON)</span>
-        </h2>
+            <Card className="mb-4 shadow-sm">
+              <Card.Body>
+                <h5 className="mb-3">New product</h5>
+                {msg && <Alert variant="info">{msg}</Alert>}
 
-          <Card className="mb-4 shadow-sm">
-            <Card.Body>
-              <h5 className="mb-3">New product</h5>
-              {msg && <Alert variant="info">{msg}</Alert>}
 
-              <Form onSubmit={handleSubmit}>
-                <Row className="g-3">
-                  <Col md={4}>
-                    <Form.Group controlId="formName">
-                      <Form.Label>Name</Form.Label>
-                      <Form.Control
-                        type="text"
-                        name="name"
-                        placeholder="PPF Ultra 10mil"
-                        value={form.name}
-                        onChange={handleChange}
-                        required
-                      />
-                    </Form.Group>
-                  </Col>
-                  <Col md={4}>
-                    <Form.Group controlId="formPrice">
-                      <Form.Label>Price (USD)</Form.Label>
-                      <Form.Control
-                        type="number"
-                        name="price"
-                        placeholder="2000"
-                        value={form.price}
-                        onChange={handleChange}
-                        required
-                      />
-                    </Form.Group>
-                  </Col>
-                  <Col md={4}>
-                    <Form.Group controlId="formStock">
-                      <Form.Label>Stock</Form.Label>
-                      <Form.Control
-                        type="number"
-                        name="stock"
-                        placeholder="10"
-                        value={form.stock}
-                        onChange={handleChange}
-                      />
-                    </Form.Group>
-                  </Col>
+                <Form onSubmit={handleSubmit}>
+                  <Row className="g-3">
+                    <Col md={4}>
+                      <Form.Group controlId="formName">
+                        <Form.Label>Name</Form.Label>
+                        <Form.Control
+                          type="text"
+                          name="name"
+                          placeholder="PPF Ultra 10mil"
+                          value={form.name}
+                          onChange={handleChange}
+                          required
+                        />
+                      </Form.Group>
+                    </Col>
+                    <Col md={4}>
+                      <Form.Group controlId="formPrice">
+                        <Form.Label>Price (USD)</Form.Label>
+                        <Form.Control
+                          type="number"
+                          name="price"
+                          placeholder="2000"
+                          value={form.price}
+                          onChange={handleChange}
+                          required
+                        />
+                      </Form.Group>
+                    </Col>
+                    <Col md={4}>
+                      <Form.Group controlId="formStock">
+                        <Form.Label>Stock</Form.Label>
+                        <Form.Control
+                          type="number"
+                          name="stock"
+                          placeholder="10"
+                          value={form.stock}
+                          onChange={handleChange}
+                        />
+                      </Form.Group>
+                    </Col>
 
-                  <Col md={6}>
-                    <Form.Group controlId="formCategory">
+
+                    <Col md={6}>
+                      <Form.Group controlId="formCategory">
+                        <Form.Label>Category</Form.Label>
+                        <Form.Select
+                          name="category"
+                          value={form.category}
+                          onChange={handleChange}
+                        >
+                          {Object.keys(CATS).map((c) => (
+                            <option key={c} value={c}>{c}</option>
+                          ))}
+                        </Form.Select>
+                      </Form.Group>
+                    </Col>
+
+
+                    <Col md={6}>
+                      <Form.Group controlId="formSubcategory">
+                        <Form.Label>Subcategory</Form.Label>
+                        <Form.Select
+                          name="subcategory"
+                          value={form.subcategory}
+                          onChange={handleChange}
+                        >
+                          {CATS[form.category].map((s) => (
+                            <option key={s} value={s}>{s}</option>
+                          ))}
+                        </Form.Select>
+                      </Form.Group>
+                    </Col>
+                  </Row>
+
+
+                  <div className="text-center mt-4">
+                    <Button type="submit" variant="outline-danger">
+                      Save Product
+                    </Button>
+                  </div>
+                </Form>
+              </Card.Body>
+            </Card>
+
+
+            <Card className="shadow-sm">
+              <Card.Body>
+                <h5 className="mb-3">List of products</h5>
+                {products.length === 0 ? (
+                  <p className="text-muted">There are no products</p>
+                ) : (
+                  <Table
+                    striped
+                    bordered
+                    hover
+                    responsive
+                    className="align-middle admin-products-table"   // 👈 clase extra
+                  >
+                    <thead>
+                      <tr>
+                        <th>Image</th>
+                        <th>Name</th>
+                        <th>Category / Sub</th>
+                        <th>Price</th>
+                        <th>Stock</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {products.map((p) => (
+                        <tr key={`${p.origin}-${p.id}`}>
+                          <td className="text-center">
+                            <img
+                              src={p.image || DEFAULT_IMAGE}
+                              alt={p.name}
+                              className="admin-product-img img-fluid"
+                              style={{
+                                width: "64px",
+                                height: "64px",
+                                objectFit: "cover",
+                                borderRadius: 6,
+                              }}
+                              onError={(e) => {
+                                e.currentTarget.src = DEFAULT_IMAGE;
+                              }}
+                            />
+                          </td>
+                          <td>{p.name}</td>
+                          <td>{p.category} / {p.subcategory}</td>
+                          <td>${Number(p.price).toLocaleString()}</td>
+                          <td>{p.stock}</td>
+                          <td className="d-flex gap-2">
+                            <Button
+                              size="sm"
+                              variant="secondary"
+                              onClick={() => openEdit(p)}
+                            >
+                              Edit
+                            </Button>
+                            <Button
+                              size="sm"
+                              variant="danger"
+                              onClick={() => handleDelete(p.id)}
+                            >
+                              Delete
+                            </Button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </Table>
+                )}
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
+
+
+        {/* Modal Edit */}
+        <Modal show={showEdit} onHide={() => setShowEdit(false)}>
+          <Modal.Header closeButton>
+            <Modal.Title>Edit product</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            {edit && (
+              <Form>
+                <Form.Group className="mb-2">
+                  <Form.Label>Name</Form.Label>
+                  <Form.Control
+                    value={edit.name}
+                    onChange={(e) =>
+                      setEdit((prev) => ({ ...prev, name: e.target.value }))
+                    }
+                  />
+                </Form.Group>
+                <Form.Group className="mb-2">
+                  <Form.Label>Price (USD)</Form.Label>
+                  <Form.Control
+                    type="number"
+                    value={edit.price}
+                    onChange={(e) =>
+                      setEdit((prev) => ({
+                        ...prev,
+                        price: Number(e.target.value),
+                      }))
+                    }
+                  />
+                </Form.Group>
+                <Form.Group className="mb-2">
+                  <Form.Label>Stock</Form.Label>
+                  <Form.Control
+                    type="number"
+                    value={edit.stock}
+                    onChange={(e) =>
+                      setEdit((prev) => ({
+                        ...prev,
+                        stock: Number(e.target.value),
+                      }))
+                    }
+                  />
+                </Form.Group>
+                <Row>
+                  <Col>
+                    <Form.Group>
                       <Form.Label>Category</Form.Label>
                       <Form.Select
-                        name="category"
-                        value={form.category}
-                        onChange={handleChange}
+                        value={edit.category}
+                        onChange={(e) => {
+                          const cat = e.target.value;
+                          setEdit((prev) => ({
+                            ...prev,
+                            category: cat,
+                            subcategory: CATS[cat][0],
+                          }));
+                        }}
                       >
                         {Object.keys(CATS).map((c) => (
                           <option key={c} value={c}>{c}</option>
@@ -247,153 +446,38 @@ export default function AdminPanel() {
                       </Form.Select>
                     </Form.Group>
                   </Col>
-
-                  <Col md={6}>
-                    <Form.Group controlId="formSubcategory">
+                  <Col>
+                    <Form.Group>
                       <Form.Label>Subcategory</Form.Label>
                       <Form.Select
-                        name="subcategory"
-                        value={form.subcategory}
-                        onChange={handleChange}
+                        value={edit.subcategory}
+                        onChange={(e) =>
+                          setEdit((prev) => ({
+                            ...prev,
+                            subcategory: e.target.value,
+                          }))
+                        }
                       >
-                        {CATS[form.category].map((s) => (
+                        {CATS[edit.category].map((s) => (
                           <option key={s} value={s}>{s}</option>
                         ))}
                       </Form.Select>
                     </Form.Group>
                   </Col>
                 </Row>
-
-                <div className="text-center mt-4">
-                  <Button type="submit" variant="outline-danger">
-                    Save Product
-                  </Button>
-                </div>
               </Form>
-            </Card.Body>
-          </Card>
-
-          <Card className="shadow-sm">
-            <Card.Body>
-              <h5 className="mb-3">List of products</h5>
-              {products.length === 0 ? (
-                <p className="text-muted">There are no products</p>
-              ) : (
-                <Table striped bordered hover responsive>
-                  <thead>
-                    <tr>
-                      <th>Image</th>
-                      <th>Name</th>
-                      <th>Category / Sub</th>
-                      <th>Price</th>
-                      <th>Stock</th>
-                      <th>Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {products.map((p) => (
-                      <tr key={`${p.origin}-${p.id}`}>
-                        <td>
-                          <img
-                            src={p.image || DEFAULT_IMAGE}
-                            alt={p.name}
-                            style={{ width: 64, height: 64, objectFit: "cover", borderRadius: 6 }}
-                            onError={(e) => { e.currentTarget.src = DEFAULT_IMAGE; }}
-                          />
-                        </td>
-                        <td>{p.name}</td>
-                        <td>{p.category} / {p.subcategory}</td>
-                        <td>${Number(p.price).toLocaleString()}</td>
-                        <td>{p.stock}</td>
-                        <td className="d-flex gap-2">
-                          <Button size="sm" variant="secondary" onClick={() => openEdit(p)}>
-                            Edit
-                          </Button>
-                          <Button size="sm" variant="danger" onClick={() => handleDelete(p.id)}>
-                            Delete
-                          </Button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </Table>
-              )}
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
-
-      {/* Modal Edit */}
-      <Modal show={showEdit} onHide={() => setShowEdit(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>Edit product</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          {edit && (
-            <Form>
-              <Form.Group className="mb-2">
-                <Form.Label>Name</Form.Label>
-                <Form.Control
-                  value={edit.name}
-                  onChange={(e) => setEdit((prev) => ({ ...prev, name: e.target.value }))}
-                />
-              </Form.Group>
-              <Form.Group className="mb-2">
-                <Form.Label>Price (USD)</Form.Label>
-                <Form.Control
-                  type="number"
-                  value={edit.price}
-                  onChange={(e) => setEdit((prev) => ({ ...prev, price: Number(e.target.value) }))}
-                />
-              </Form.Group>
-              <Form.Group className="mb-2">
-                <Form.Label>Stock</Form.Label>
-                <Form.Control
-                  type="number"
-                  value={edit.stock}
-                  onChange={(e) => setEdit((prev) => ({ ...prev, stock: Number(e.target.value) }))}
-                />
-              </Form.Group>
-              <Row>
-                <Col>
-                  <Form.Group>
-                    <Form.Label>Category</Form.Label>
-                    <Form.Select
-                      value={edit.category}
-                      onChange={(e) => {
-                        const cat = e.target.value;
-                        setEdit((prev) => ({ ...prev, category: cat, subcategory: CATS[cat][0] }));
-                      }}
-                    >
-                      {Object.keys(CATS).map((c) => (
-                        <option key={c} value={c}>{c}</option>
-                      ))}
-                    </Form.Select>
-                  </Form.Group>
-                </Col>
-                <Col>
-                  <Form.Group>
-                    <Form.Label>Subcategory</Form.Label>
-                    <Form.Select
-                      value={edit.subcategory}
-                      onChange={(e) => setEdit((prev) => ({ ...prev, subcategory: e.target.value }))}
-                    >
-                      {CATS[edit.category].map((s) => (
-                        <option key={s} value={s}>{s}</option>
-                      ))}
-                    </Form.Select>
-                  </Form.Group>
-                </Col>
-              </Row>
-            </Form>
-          )}
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowEdit(false)}>Cancel</Button>
-          <Button variant="primary" onClick={saveEdit}>Save</Button>
-        </Modal.Footer>
-      </Modal>
-    </Container>
+            )}
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={() => setShowEdit(false)}>
+              Cancel
+            </Button>
+            <Button variant="primary" onClick={saveEdit}>
+              Save
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      </Container>
+    </>
   );
 }
-
