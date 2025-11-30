@@ -1,19 +1,46 @@
 import { useEffect, useMemo, useState } from "react";
 import { Card, Button, Spinner, Alert, Form } from "react-bootstrap";
+import { useLocation } from "react-router-dom";
 import catalog from "../../data/catalog.json";
 import Swal from "sweetalert2";
 import "sweetalert2/dist/sweetalert2.min.css";
 
+
 const DEFAULT_IMAGE = "/images/testingImg.jpg";
 const EXTRA_KEY = "catalogExtras";
 
+
+// 🔹 Helper para leer ?search= de la URL
+function useSearchParam(name) {
+  const { search } = useLocation();
+  return useMemo(() => {
+    const params = new URLSearchParams(search);
+    return params.get(name) || "";
+  }, [search, name]);
+}
+
+
+// ⚠️ Si querés que el componente se llame DragonBallAPI
+// cambiá "DragonBall" por "DragonBallAPI" aquí y en App.jsx
 export default function DragonBall({ onAddToCart }) {
-  const [items, setItems] = useState([]);  
+  const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [err, setErr] = useState("");
-  const [q, setQ] = useState("");
   const [limit, setLimit] = useState(12);
 
+
+  // 🔍 lo que viene del navbar: /dragonball?search=texto
+  const searchFromUrl = useSearchParam("search");
+  const [q, setQ] = useState(searchFromUrl);
+
+
+  // si el navbar manda una nueva búsqueda, actualizamos q
+  useEffect(() => {
+    setQ(searchFromUrl);
+  }, [searchFromUrl]);
+
+
+  // 🔹 Catálogo local (TODAS las categorías del JSON)
   const flattenCatalog = useMemo(() => {
     const out = [];
     for (const catKey of Object.keys(catalog)) {
@@ -34,14 +61,17 @@ export default function DragonBall({ onAddToCart }) {
     return out;
   }, []);
 
+
   useEffect(() => {
     const load = async () => {
       setLoading(true);
       setErr("");
 
+
       try {
         // 1) Catálogo local (JSON)
         const base = flattenCatalog;
+
 
         // 2) Extras desde localStorage
         const extras = JSON.parse(localStorage.getItem(EXTRA_KEY) || "[]").map(
@@ -56,6 +86,7 @@ export default function DragonBall({ onAddToCart }) {
           })
         );
 
+
         // 3) API DragonBall
         let apiProducts = [];
         try {
@@ -63,11 +94,17 @@ export default function DragonBall({ onAddToCart }) {
           const json = await res.json();
           const list = Array.isArray(json) ? json : json?.items ?? [];
           const total = Math.max(list.length, 1);
-          const MIN = 2000, MAX = 10000, RANGE = MAX - MIN;
+          const MIN = 2000,
+            MAX = 10000,
+            RANGE = MAX - MIN;
+
+
           apiProducts = list.map((c, i) => {
             const ratio = total > 1 ? i / (total - 1) : 0;
             let price = MIN + ratio * RANGE;
             price = Math.round(price / 50) * 50;
+
+
             return {
               id: `api-${c.id ?? i}`,
               name: c.name ?? c.character ?? "Desconocido",
@@ -77,25 +114,29 @@ export default function DragonBall({ onAddToCart }) {
             };
           });
         } catch {
-     
-         
           apiProducts = [];
         }
 
+
         setItems([...extras, ...base, ...apiProducts]);
       } catch (e) {
+        console.error(e);
         setErr("No pude cargar datos.");
       } finally {
         setLoading(false);
       }
     };
 
+
     load();
   }, [flattenCatalog]);
 
+
+  // 🔍 filtro por letra/palabra (navbar + input interno)
   const filtered = items.filter((c) =>
     (c.name || "").toLowerCase().includes(q.toLowerCase())
   );
+
 
   const handleAdd = (item) => {
     const payload = {
@@ -105,18 +146,19 @@ export default function DragonBall({ onAddToCart }) {
       price: item.price,
     };
 
+
     // Evento para el contador del navbar
     window.dispatchEvent(new CustomEvent("cart:add", { detail: payload }));
-    // Callback externo si existe
     onAddToCart?.(payload);
 
-    // ✅ SweetAlert: toast de éxito
+
     Swal.fire({
-  title: "Nice! Your new item is in the cart.",
-  imageUrl: "./images/sweetAlert.webp",
-  draggable: true
-});
+      title: "Nice! Your new item is in the cart.",
+      imageUrl: "./images/sweetAlert.webp",
+      draggable: true,
+    });
   };
+
 
   const handleImgError = (e) => {
     if (e.currentTarget.src.endsWith(DEFAULT_IMAGE)) return;
@@ -124,9 +166,10 @@ export default function DragonBall({ onAddToCart }) {
     e.currentTarget.style.opacity = 1;
   };
 
+
   return (
-    <div className="container py-4">
-      {/* Buscador */}
+    <div className="container py-4" style={{ marginTop: "5rem" }}>
+      {/* Buscador interno (queda sincronizado con el del navbar) */}
       <Form className="mb-3">
         <Form.Control
           type="text"
@@ -136,12 +179,16 @@ export default function DragonBall({ onAddToCart }) {
         />
       </Form>
 
+
       {loading && (
         <div className="d-flex justify-content-center py-5">
           <Spinner animation="border" />
         </div>
       )}
+
+
       {err && <Alert variant="danger">{err}</Alert>}
+
 
       {!loading && !err && (
         <div className="row g-4">
@@ -158,6 +205,7 @@ export default function DragonBall({ onAddToCart }) {
                 <Card.Body className="d-flex flex-column">
                   <Card.Title className="mb-1">{c.name}</Card.Title>
 
+
                   <div className="mb-2">
                     <span className="text-muted">Price: </span>
                     <strong>US${Number(c.price).toLocaleString()}</strong>
@@ -172,6 +220,7 @@ export default function DragonBall({ onAddToCart }) {
                     </div>
                   </div>
 
+
                   <Button
                     variant="dark"
                     className="mt-auto"
@@ -183,6 +232,7 @@ export default function DragonBall({ onAddToCart }) {
               </Card>
             </div>
           ))}
+
 
           {filtered.length > limit && (
             <div className="text-center">

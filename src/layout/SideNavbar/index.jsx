@@ -2,9 +2,13 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import NavBarCustom from "../../layout/NavBarCustom";
 
-function SideNavbar() {
+
+function SideNavbar({
+  onSearchSubmit,     
+}) {
   const [cartCount, setCartCount] = useState(0);
   const navigate = useNavigate();
+
 
   useEffect(() => {
     const computeCount = (arr) =>
@@ -12,6 +16,7 @@ function SideNavbar() {
         (acc, p) => acc + Number(p.quantity ?? p.qty ?? 1),
         0
       );
+
 
     const readFromStorage = () => {
       try {
@@ -22,25 +27,28 @@ function SideNavbar() {
       }
     };
 
-   
+
     readFromStorage();
 
-    
+
     const onChanged = (e) => {
       const arr = e?.detail ?? JSON.parse(localStorage.getItem("cart") || "[]");
       setCartCount(computeCount(arr));
     };
 
+
     const onAdd = () => onChanged();
 
-    
+
     const onStorage = (ev) => {
       if (ev.key === "cart") readFromStorage();
     };
 
+
     window.addEventListener("cart:changed", onChanged);
     window.addEventListener("cart:add", onAdd);
     window.addEventListener("storage", onStorage);
+
 
     return () => {
       window.removeEventListener("cart:changed", onChanged);
@@ -48,6 +56,7 @@ function SideNavbar() {
       window.removeEventListener("storage", onStorage);
     };
   }, []);
+
 
   const links = [
     { label: "About", href: "/under-construction" },
@@ -65,16 +74,17 @@ function SideNavbar() {
     },
   ];
 
-  const handleSearch = (text) => console.log("Buscar:", text);
+
   const goToCart = () => navigate("/cart");
+
 
   return (
     <NavBarCustom
       logoSrc="/images/LOGO.png"
       brand="NexGen"
       links={links}
-      onSearchSubmit={handleSearch}
-      cartCount={cartCount}   
+      onSearchSubmit={onSearchSubmit} 
+      cartCount={cartCount}
       favCount={0}
       iconColor="white"
       iconSize={26}
@@ -82,5 +92,6 @@ function SideNavbar() {
     />
   );
 }
+
 
 export default SideNavbar;
